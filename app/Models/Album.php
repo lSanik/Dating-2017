@@ -24,4 +24,11 @@ class Album extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+    public function getAlbums($user_id){
+        return $this->orderBy('name', 'ASC')->where('user_id', '=', $user_id)->get();
+
+       /*
+        hasMany(self::select('count')
+            ->where('user_id', '=', $user_id));*/
+    }
 }

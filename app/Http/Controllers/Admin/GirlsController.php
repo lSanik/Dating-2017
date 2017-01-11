@@ -12,6 +12,10 @@ use App\Models\State;
 use App\Models\Status;
 use App\Models\User;
 use App\Models\Why;
+
+use App\Models\Album;
+use App\Models\Images;
+
 use App\Services\ZodiacSignService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,14 +31,14 @@ class GirlsController extends Controller
     private $passport;
     private $passport_photos = [];
 
-    public function __construct(User $user, Profile $profile, Passport $passport)
+    public function __construct(User $user, Profile $profile, Passport $passport,Album $album)
     {
         $this->middleware('auth');
 
         $this->user = $user;
+        $this->Album = $album;
         $this->profile = $profile;
         $this->passport = $passport;
-
         view()->share('new_ticket_messages', parent::getUnreadMessages());
         view()->share('unread_ticket_count', parent::getUnreadMessagesCount());
     }
@@ -197,30 +201,7 @@ class GirlsController extends Controller
             /*
             * Create girl profile
             */
-            /*
-           $this->profile->user_id = $this->user->id;
-           $this->profile->birthday =  $request->input('b_day').'-'.$request->input('b_month').'-'.$request->input('b_year');
-           $this->profile->height = $request->input('height');
-           $this->profile->weight = $request->input('weight');
 
-           $this->profile->about = $request->input('about');
-           $this->profile->looking = $request->input('looking');
-           $this->profile->l_age_start = $request->input('l_age_start');
-           $this->profile->l_age_stop = $request->input('l_age_stop');
-
-           /* Enums */
-            /*
-           $this->profile->gender = $request->input('gender');
-           $this->profile->eye = $request->input('eye');
-           $this->profile->hair = $request->input('hair');
-           $this->profile->education = $request->input('education');
-           $this->profile->kids = $request->input('kids');
-           $this->profile->want_kids = $request->input('want_k');
-           $this->profile->religion = $request->input('religion');
-           $this->profile->smoke = $request->input('smoke');
-           $this->profile->drink = $request->input('drink');
-           $this->profile->occupation = $request->input('occupation');
-profile_old */
             $this->profile->user_id = $this->user->id;
             $this->profile->gender    = $request->input('gender');
             $this->profile->height    = $request->input('height');
@@ -248,8 +229,6 @@ profile_old */
             $this->profile->l_weight_start=$request->input('l_weight_start');
             $this->profile->l_weight_stop=$request->input('l_weight_stop');
             $this->profile->l_horoscope_id=$request->input('l_horoscope_id');
-
-
 
             $this->profile->save();
 
@@ -293,7 +272,6 @@ profile_old */
     public function edit($id)
     {
         $user = $this->user->find($id);
-
         $selects = [
             'gender'    => $this->profile->getEnum('gender'),
             'eye'       => $this->profile->getEnum('eye'),
@@ -324,6 +302,7 @@ profile_old */
             'states'    => $states,
             'statuses'  => $statuses,
             'why'       => $why,
+            'albums'    => (new Album)->getAlbums($id),
             'zodiac_list'=>ZodiacSignService::getAll(),
         ]);
     }
@@ -516,5 +495,93 @@ profile_old */
         $age = Carbon::now()->diffInYears(Carbon::createFromFormat('d/m/Y', $bithday));
 
         return $age;
+    }
+
+
+    private function showAlbum($id, $aid)
+    {
+
+        $photos = Images::where('album_id', '=', $aid)->get();
+        return view('client.profile.albums.show')->with([
+            'photos' => $photos,
+            'id'     => $id
+        ]);
+    }
+    /**
+     * Create new album
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function createAlbum()
+    {
+        return view('admin.profile.girls.createAlbum')->with([
+            'heading' => 'Albums',
+        ]);
+    }
+
+    /**
+     * Create and store new album with photos
+     *
+     * @param Request $request
+     * @param $id
+     * @return Redirect
+     */
+    private function makeAlbum(Request $request)
+    {
+        $id=\Auth::user()->id;
+        /**
+         * Make new Album
+         */
+        $album = new Album();
+        $album->name          = $request->input('name');
+        $album->cover_image   = $this->upload($request->file('cover_image'));
+        $album->user_id       = $id;
+        $album->save();
+
+        /**
+         * Load photos
+         */
+
+        foreach ($request->allFiles()['files'] as $file) {
+            $image = new Images();
+            $image->album_id = $album->id;
+            $image->image = $this->upload($file);
+            $image->save();
+        }
+
+        return redirect('/'.\App::getLocale().'/profile/'.$id.'/photo');
+    }
+
+    /**
+     * Drop photo
+     *
+     * @param Request $request
+     * @return
+     */
+    private function dropImageAlbum(Request $request)
+    {
+        $image = Images::find($request->input('id'));
+        $this->removeFile('/uploads/'.$image->image);
+
+        Images::destroy($request->input('id'));
+        return response('success', 200);
+    }
+
+    /**
+     * Drop album & files
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function deleteAlbum($albumId)
+    {
+        $images = Images::where('album_id', '=', $albumId);
+        foreach ($images as $i){
+            $this->removeFile('/uploads/'.$i->image);
+        }
+
+        Album::destroy($albumId);
+        return response('success', 200);
     }
 }
