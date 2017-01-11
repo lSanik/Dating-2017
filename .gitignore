@@ -1,0 +1,11 @@
+
+/.env
+.idea/dataSources.local.xml
+.idea/dataSources/
+.idea/deployment.xml
+.idea/gmc_ftp.iml
+.idea/modules.xml
+.idea/php.xml
+.idea/phpspec.xml
+.idea/workspace.xml
+webstat/

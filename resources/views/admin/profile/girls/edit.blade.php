@@ -18,6 +18,36 @@
             background-color: white;
 
         }
+        .item.last_create a{
+            opacity: 0.9;
+            transition: 0.2s;
+        }
+        .item.last_create a:hover{
+            opacity: 1;
+            transition: 0.2s;
+        }
+        .delete_gallery{
+            position: absolute;
+            top: 0;
+            background: red;
+            color: white;
+            /* right: 25px; */
+            width: 25px;
+            text-align: center;
+            height: 25px;
+            font-size: 20px;
+            line-height: 25px;
+            opacity: 0.7;
+            transition: 0.3s;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        .delete_gallery:hover{
+            opacity: 1;
+            transition: 0.3s;
+            color: white;
+        }
     </style>
 @stop
 
@@ -311,75 +341,89 @@
                     <!-- Photoalbums -->
                     <div role="tabpanel" class="tab-pane" id="photoalbums">
                         <div class="row">
-                            <div class="col-md-6 col-md-offset-3">
+                            <div class="col-md-12">
+                                <h3 class="text-center">Albums</h3>
                                 <div class="row">
-                                    <button type="button" class="btn btn-success pull-right" style="margin: 10px"><i class="fa fa-plus"></i>&nbsp;Добавить</button>
-                                </div>
-                                <div class="row">
-                                    @todo вывод альбомов
+                                    <div class="owl row online">
+                                        @foreach($albums as $a)
+                                            <div class="item col-md-4" id="gallerey-{{$a->id}}">
+                                                <div class="row text-center">
+                                                    <a href="{{ url(App::getLocale().'/admin/girl/edit/'.$user->id.'/edit_album/'.$a->id) }}">
+                                                        <img src="{{ url('/uploads/'.$a->cover_image) }}" width="90%">
+                                                        <div class="text-center">{{ $a->name }}</div>
+                                                    </a>
+                                                    <a class="delete_gallery" href="#" onclick="deleteGallery({{$a->id}});"  ><i class="fa fa-trash-o"></i></a>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <div class="item last_create col-md-4">
+                                            <a href="{{url(App::getLocale().'/admin/girl/edit/'.$user->id.'/add_album') }}">
+                                                <img style="    width: 100%;" class="create" src="/public/uploads/add_image.png">
+                                                <div class="text-center">{{ trans('add.photo') }}</div>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                        <div role="tabpanel" class="tab-pane" id="status">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    @if( Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder') )
-                                    <div class="form-group" style="margin-top: 20px">
-                                        <select name="status" class="form-control">
-                                            @foreach($statuses as $status)
-                                                <option value="{{ $status->id }}" {{ $status->id == $user->status_id ? "selected" : ''}}>{{ trans('status.'.$status->name) }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="why">Причина отказа (если есть):</label>
-                                        <textarea name="why" class="form-control">
-                                            @if( !empty($why) && ( $user->status_id == 2 || $user->status_id == 3 || $user->status_id == 4 )   )
-                                                @foreach($why as $w)
-                                                    @if($w->meta_key == "status_comment")
-                                                         {{ $w->meta_value }}
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                        </textarea>
-                                    </div>
-                                    @else
-                                        <title>Статус анкеты:
-                                            @foreach($statuses as $status)
-                                                @if($status->id == $user->status_id)
-                                                 {{trans('status.'.$status->name)}}
+                    <div role="tabpanel" class="tab-pane" id="status">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @if( Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder') )
+                                <div class="form-group" style="margin-top: 20px">
+                                    <select name="status" class="form-control">
+                                        @foreach($statuses as $status)
+                                            <option value="{{ $status->id }}" {{ $status->id == $user->status_id ? "selected" : ''}}>{{ trans('status.'.$status->name) }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="why">Причина отказа (если есть):</label>
+                                    <textarea name="why" class="form-control">
+                                        @if( !empty($why) && ( $user->status_id == 2 || $user->status_id == 3 || $user->status_id == 4 )   )
+                                            @foreach($why as $w)
+                                                @if($w->meta_key == "status_comment")
+                                                     {{ $w->meta_value }}
                                                 @endif
                                             @endforeach
-                                        </title>
-                                    @endif
+                                        @endif
+                                    </textarea>
+                                </div>
+                                @else
+                                    <title>Статус анкеты:
+                                        @foreach($statuses as $status)
+                                            @if($status->id == $user->status_id)
+                                             {{trans('status.'.$status->name)}}
+                                            @endif
+                                        @endforeach
+                                    </title>
+                                @endif
 
-                                    <div class="form-group">
-                                        {!! Form::label('passno','№ паспорта') !!}
-                                        {!! Form::text('passno', ((isset($user->passport))?$user->passport->passno:""), ['class' => 'form-control', 'disabled' => 'disabled']) !!}
-                                    </div>
+                                <div class="form-group">
+                                    {!! Form::label('passno','№ паспорта') !!}
+                                    {!! Form::text('passno', ((isset($user->passport))?$user->passport->passno:""), ['class' => 'form-control', 'disabled' => 'disabled']) !!}
+                                </div>
 
-                                    <div class="form-group">
-                                    {!! Form::label('pass_date', 'Дата выдачи паспорта') !!}
-                                    {!! Form::text('pass_date', ((isset($user->passport))?$user->passport->date:"") , ['class' => 'form-control default-date-picker', 'id' => 'datepicker', 'disabled' => 'disabled']) !!}
-                                    </div>
+                                <div class="form-group">
+                                {!! Form::label('pass_date', 'Дата выдачи паспорта') !!}
+                                {!! Form::text('pass_date', ((isset($user->passport))?$user->passport->date:"") , ['class' => 'form-control default-date-picker', 'id' => 'datepicker', 'disabled' => 'disabled']) !!}
+                                </div>
 
-                                    <div class="form-group">
-                                        {!! Form::label('avatar', 'Фото/Скан паспорта') !!}
-                                        <br/>
-                                        <img width="373rem" src="{{ url('/uploads/'.  ((isset($user->passport))?$user->passport->cover:"")) }}">
-                                        <input type="file" class="form-control file" name="pass_photo" value="{{ ((isset($user->passport))?$user->passport->cover:"") }}"  disabled="disabled" accept="image/*"><!--disabled="disabled"-->
-                                    </div>
+                                <div class="form-group">
+                                    {!! Form::label('avatar', 'Фото/Скан паспорта') !!}
+                                    <br/>
+                                    <img width="373rem" src="{{ url('/uploads/'.  ((isset($user->passport))?$user->passport->cover:"")) }}">
+                                    <input type="file" class="form-control file" name="pass_photo" value="{{ ((isset($user->passport))?$user->passport->cover:"") }}"  disabled="disabled" accept="image/*"><!--disabled="disabled"-->
+                                </div>
 
-                                    <div class="form-group text-center">
-                                        <button class="btn btn-success status">Сохранить</button>
-                                    </div>
+                                <div class="form-group text-center">
+                                    <button class="btn btn-success status">Сохранить</button>
                                 </div>
                             </div>
                         </div>
-
+                    </div>
                 </div>
             {!! Form::close() !!}
         </div>
@@ -524,5 +568,12 @@
             var city_id = $('input[name="city_id"]').val();
 
         })
+        function deleteGallery($gaId){
+            $.post( "/admin/girl/deleteAlbum/"+$gaId, {_token : $('input[name="_token').val()} ).done( function( data ) {
+
+                $("#gallerey-"+$gaId).remove();
+
+            });
+        }
     </script>
 @stop
