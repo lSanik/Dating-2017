@@ -26,7 +26,6 @@ class Album extends Model
     }
     public function getAlbums($user_id){
         return $this->orderBy('name', 'ASC')->where('user_id', '=', $user_id)->get();
-
        /*
         hasMany(self::select('count')
             ->where('user_id', '=', $user_id));*/
