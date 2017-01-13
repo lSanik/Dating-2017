@@ -108,6 +108,9 @@
             transition: 0.3s;
             color: white;
         }
+        .file-drop-zone-title{
+            opacity: 0!important;
+        }
     </style>
 @stop
 
