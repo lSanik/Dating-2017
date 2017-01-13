@@ -8,6 +8,9 @@
         .kv-file-upload.btn.btn-xs.btn-default{
             display: none!important;
         }
+        .file-drop-zone-title{
+            opacity: 0!important;
+        }
     </style>
 @stop
 

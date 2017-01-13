@@ -149,7 +149,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group text-center col-md-12">
-                                    <button class="btn btn-next next" onClick="next_click();">Далее</button>
+                                    <a style="color: white;background-color: gray;" class="btn btn-next next" onClick="next_click();">Далее</a>
                                 </div>
                             </div>
                         </div>
@@ -278,9 +278,9 @@
                                 </div>
                             </div>
                             <div class="form-group text-center col-md-12">
-                                <button class="btn btn-next next" onclick="next_click1();">Далее</button>
+                                <a style="color: white;background-color: gray;" class="btn btn-next next" onclick="next_click1();">Далее</a>
                             </div>
-
+ 
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="status">
