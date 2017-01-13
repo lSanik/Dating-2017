@@ -47,8 +47,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/get/cities/', 'CityController@getCityByState');
 
 });
-
-
 /**
  * Ajax Handlers
  * todo: change all data getters from _POST to _GET
@@ -195,13 +193,18 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::get('girls/{status}', 'Admin\GirlsController@getByStatus'); //Return all by status
 
     Route::get('girl/edit/{id}', 'Admin\GirlsController@edit'); // Edit Girl profile
-    Route::get('girl/edit/{id}/add_album', 'Admin\GirlsController@createAlbum'); // Edit Girl albums
+    Route::get('girl/edit/{id}/add_album', 'Admin\GirlsController@createAlbum'); // Create Girl albums
+    Route::get('girl/edit/{id}/edit_album/{aid}', 'Admin\GirlsController@editAlbum'); // Edit Girl albums
 
+    //dropImageAlbum
 
     Route::get('girl/show/{id}', 'Admin\GirlsController@show'); // Show Girl profile
     Route::get('girl/drop/{id}', 'Admin\GirlsController@destroy');//
 
-    Route::post('girl/edit/{id}/add_album', 'Admin\GirlsController@addAlbum'); // Edit Girl save albums
+    Route::post('girl/edit/{id}/add_album', 'Admin\GirlsController@addAlbum'); // Create Girl save albums
+    Route::post('girl/edit/{id}/edit_album/{aid}', 'Admin\GirlsController@saveAlbume'); // Save editing Girl albums
+    Route::post('girl/dropImageAlbum/{aid}', 'Admin\GirlsController@dropImageAlbum'); // Delete photo from Girl albums
+    //showAlbum
     Route::post('girl/deleteAlbum/{albumID}', 'Admin\GirlsController@deleteAlbum'); // Edit Girl save albums
     //    //admin/girl/deleteAlbum/3
     Route::post('girl/check', ['as' => 'check_pass', 'uses' => 'Admin\GirlsController@check']); // Check passport at DB

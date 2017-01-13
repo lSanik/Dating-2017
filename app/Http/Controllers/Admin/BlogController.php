@@ -190,10 +190,11 @@ class BlogController extends Controller
             if (!$title) {
                 $title = null;
             }
-        $this->trans::updateOrCreate(
+            //blog upd
+        $this->trans->updateOrCreate(
             [
                 'post_id' => $id,
-                'locale' =>  $local
+                'locale' =>  $local,
             ],
             [
                 'body' => $body,
