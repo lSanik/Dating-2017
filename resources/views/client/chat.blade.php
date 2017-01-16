@@ -110,7 +110,7 @@
             setInterval(sec, 5000);// использовать функцию
 
             function chatConnect(){
-                document.cookie = "user_key={{session()->getId()}}";
+                createCookie("user_key",'{{session()->getId()}}','100');
                 window.chat = new WebSocket('ws://{{$_SERVER['SERVER_NAME']}}:8080');
 
                 window.chat.onopen = function (e) {
@@ -192,6 +192,26 @@
                 window.chat.send(JSON.stringify(data));
                 //console.log(data);
             };
+        }
+        function createCookie(name,value,days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                var expires = "; expires=" + date.toUTCString();
+            }
+            else var expires = "";
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
         }
     </script>
 @stop

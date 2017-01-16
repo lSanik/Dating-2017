@@ -185,7 +185,7 @@
             initialPreview: [
                 "<img style='height:160px' src='/uploads/{{$album->cover_image}}'>",
             ],
-            allowedFileExtensions: ["jpg", "png", "gif"]
+            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"]
         });
 
         $("#input-fcount-1").fileinput({
