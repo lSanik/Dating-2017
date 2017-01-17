@@ -46,7 +46,6 @@ class ChatSocket extends BaseSocket
         //$conn->resourceId="999";
         // TODO: make cookies to laravel aut method
         $cookies=$conn->WebSocket->request->getCookies();
-        dump($cookies);
         if(isset($cookies['user_key']) && $cookies['user_key']!=null){
             echo 'Total users: '.($numRecv=count($this->clients))."\n";
         }else{

@@ -86,8 +86,8 @@ class GirlsController extends Controller
             'finance_income' => $this->profile->getEnum('finance_income'),
             'english_level' => $this->profile->getEnum('english_level'),
         ];
-
-        $countries = Country::all();
+        $countries = Country::orderBy('name')->get();
+        //$countries = Country::all();
 
         return view('admin.profile.girls.create')->with([
             'heading'   => 'Добавить девушку',
@@ -291,7 +291,8 @@ class GirlsController extends Controller
             'finance_income' => $this->profile->getEnum('finance_income'),
             'english_level' => $this->profile->getEnum('english_level'),
         ];
-        $countries = Country::all();
+        $countries = Country::orderBy('name')->get();
+
         $states = State::all();
 
         $statuses = Status::all();

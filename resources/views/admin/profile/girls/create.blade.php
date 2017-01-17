@@ -360,9 +360,6 @@
     <script type="text/javascript" src="{{ url('/assets/js/file-input-init.js') }}"></script>
 
     <script>
-        $( document ).ready(function() {
-
-        });
         function next_click() {
 
                 $('#open_additional').trigger('click');
@@ -375,53 +372,53 @@
                 return false;
 
         }
-        $(function() {
-
-
-            $('.default-date-picker').datepicker();
-
-
-            $('select[name="county"]').on('change', function(){
-
-                $('select[name="city"]').empty();
-
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ url('/get/states/')  }}',
-                    data: {id: $(this).val(), _token: $('input[name="_token"]').val()  },
-                    success: function( response ){
-                        $('select[name="state"]').empty();
-                        for( var i = 0; i < response.length; i++ )
-                        {
-                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
-                        }
-                    },
-                    error: function( response ){
-                        console.log( response )
+        function refreshCities(){
+            $.ajax({
+                type: 'POST',
+                url: '{{ url('/get/cities/') }}',
+                data: {id: $('select[name="state"]').val(), _token: $('input[name="_token').val() },
+                success: function( response ){
+                    $('select[name="city"]').empty();
+                    for ( var i = 0; i < response.length; i++)
+                    {
+                        $('select[name="city"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
                     }
-                });
-
+                },
+                error: function( response ){
+                    console.log( response );
+                }
             });
-
-            $('select[name="state"]').on('change', function(){
-
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ url('/get/cities/') }}',
-                    data: {id: $(this).val(), _token: $('input[name="_token').val() },
-                    success: function( response ){
-                        $('select[name="city"]').empty();
-                        for ( var i = 0; i < response.length; i++)
-                        {
-                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
-                        }
-
-                    },
-                    error: function( response ){
-                        console.log( response );
+        }
+        function refreshRegions() {
+            $('select[name="city"]').empty();
+            $.ajax({
+                type: 'POST',
+                url: '{{ url('/get/states/')  }}',
+                data: {id: $('select[name="county"]').val(), _token: $('input[name="_token"]').val()  },
+                success: function( response ){
+                    $('select[name="state"]').empty();
+                    for( var i = 0; i < response.length; i++ )
+                    {
+                        $('select[name="state"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
                     }
-                });
-
+                    refreshCities();
+                },
+                error: function( response ){
+                    console.log( response )
+                }
+            });
+        }
+        $(window).on('load', function(){
+            refreshRegions();
+        });
+        $(function() {
+            $('select[name="county"]').on('change', function(){
+                $('select[name="state"]').empty();
+                $('select[name="city"]').empty();
+                refreshRegions();
+            });
+            $('select[name="state"]').on('change', function(){
+                refreshCities();
             });
         });
     </script>
