@@ -92,6 +92,7 @@
             jQuery("#chat_yes").on("click", function () {
                 jQuery('.popup-send-invite').css("display","none");
                 //console.log(chat_partner.data('id'));
+                createCookie('send_to_id',chat_partner.data('id'),'1');
                 send_to(null,chat_partner.data('id'),'invite');
             });
 
@@ -110,7 +111,7 @@
             setInterval(sec, 5000);// использовать функцию
 
             function chatConnect(){
-                document.cookie = "user_key={{session()->getId()}}";
+                createCookie("user_key",'{{session()->getId()}}','100');
                 window.chat = new WebSocket('ws://{{$_SERVER['SERVER_NAME']}}:8080');
 
                 window.chat.onopen = function (e) {
@@ -120,7 +121,7 @@
                 window.chat.onmessage = function (e) {
                     console.log('Получены данные: ' + e.data);
                     recived_message = e.data;
-
+                    console.log(recived_message);
                     if(JSON.parse(recived_message).status=='send_invite'){
                         var invite = JSON.parse(recived_message);
                         jQuery('.popup-get-invite .name').html(invite.from_user_data['first_name']);
@@ -128,10 +129,12 @@
 
 
                     }else if(JSON.parse(recived_message).status=='invite_accepted'){
+                        window.chat_oponent_id=readCookie('send_to_id');
                         chat_started(JSON.parse(recived_message));
                     }
                     jQuery("#chat_yes_get").on("click", function () {
                         jQuery('.popup-get-invite').css("display","none");
+                        console.log(invite);
                         chat_accept_invite(invite);
                     });
                     jQuery("#chat_no_get").on("click", function () {
@@ -142,7 +145,9 @@
                 };
             }
             function chat_accept_invite(invite){
+                //console.log(invite);
                 send_to(null,invite.from_user_data[0]['sessionID'],'accepted');
+                window.chat_oponent_id=invite.from_user_data[0]['sessionID'];
                 chat_started(invite);
             }
             function chat_started(data){
@@ -151,7 +156,8 @@
                 jQuery('#messages').html("Чат начат");
                 window.chat_messages=jQuery('#messages');
                 window.init_chat=data;
-                window.chat_oponent_id=data.from_user_data[0]['sessionID'];
+                //console.log(data);
+                //window.chat_oponent_id=data.from_user_data[0]['sessionID'];
                 //initSend(jQuery('#chat_form'));
             }
             function chat_started_acepted(data){
@@ -160,6 +166,7 @@
                 jQuery('#messages').html("Чат начат");
                // window.chat_messages=jQuery('#messages');
                 //window.init_chat=data;
+                console.log(data);
                 //window.chat_oponent_id=data.from_user_data[0]['sessionID'];
                 //initSend(jQuery('#chat_form'));
             }
@@ -192,6 +199,26 @@
                 window.chat.send(JSON.stringify(data));
                 //console.log(data);
             };
+        }
+        function createCookie(name,value,days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                var expires = "; expires=" + date.toUTCString();
+            }
+            else var expires = "";
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
         }
     </script>
 @stop

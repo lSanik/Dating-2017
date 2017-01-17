@@ -37,7 +37,19 @@
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                            @if (stristr($error,"passno"))
+                                <li>The passport number field is required.</li>
+                            @elseif(stristr($error,"pass_photo"))
+                                <li>The passport photo field is required.</li>
+                            @elseif(stristr($error,"b_year_pasp"))
+                                <li>The passport year field is required.</li>
+                            @elseif(stristr($error,"b_month_pasp"))
+                                <li>The passport month field is required.</li>
+                            @elseif(stristr($error,"b_day_pasp"))
+                                <li>The passport day field is required.</li>
+                            @else
+                                <li>{{ $error }}</li>
+                            @endif
                         @endforeach
                     </ul>
                 </div>
@@ -287,20 +299,41 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    {!! Form::label('passno','№ паспорта') !!}
-                                    {!! Form::text('passno', '', ['class' => 'form-control']) !!}
+                                    <label for="passno">№ паспорта<span class="red">*</span></label>
+                                    {!! Form::text('passno', '', ['class' => 'form-control','required' => 'required']) !!}
                                 </div>
 
                                 <div class="form-group">
-                                    {!! Form::label('pass_date', 'Дата выдачи паспорта') !!}
-                                    {!! Form::date('pass_date', '' , ['class' => 'form-control' /*default-date-picker', 'id' => 'datepicker'*/]) !!}
+                                    <div class="col-md-4" style="padding-left: 0;">
+                                        <label for="b_year">Год выдачи паспорта<span class="red">*</span></label>
+                                        <select class="form-control" name="b_year_pasp" required="required" style="    padding: 0;" >
+                                            <option>---</option>
+                                            @for($i=date("Y")-100; $i<date("Y"); $i++)
+                                                <option>{!! $i !!}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="b_month" >Месяц<span class="red">*</span></label>
+                                        <select class="form-control" name="b_month_pasp" required="required" style="    padding: 0;">
+                                            @for($i=1; $i<13; $i++)
+                                                <option>{!! $i !!}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4" style="padding-right: 0;">
+                                        <label for="b_day">День<span class="red">*</span></label>
+                                        <select class="form-control" style="    padding: 0;" required="required" name="b_day_pasp">
+                                            @for($i=1; $i<32; $i++)
+                                                <option>{!! $i !!}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
                                 </div>
-
+                                </br>
                                 <div class="form-group">
-                                    {!! Form::label('avatar', 'Фото/Скан паспорта') !!}
-                                    <br/>
-                                    <img width="373rem" src="">
-                                    <input type="file" class="form-control file" name="pass_photo" value=""  accept="image/*"><!--disabled="disabled"-->
+                                    <label for="pass_photo">Фото/Скан паспорта<span class="red">*</span></label>
+                                    <input type="file" class="form-control file" name="pass_photo" value="" required="required"  accept="image/*"><!--disabled="disabled"-->
                                 </div>
 
                                 <div class="form-group col-md-12 text-center">
@@ -309,7 +342,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 {!! Form::close() !!}
         </div>
@@ -340,53 +372,53 @@
                 return false;
 
         }
-        $(function() {
-
-
-            $('.default-date-picker').datepicker();
-
-
-            $('select[name="county"]').on('change', function(){
-
-                $('select[name="city"]').empty();
-
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ url('/get/states/')  }}',
-                    data: {id: $(this).val(), _token: $('input[name="_token"]').val()  },
-                    success: function( response ){
-                        $('select[name="state"]').empty();
-                        for( var i = 0; i < response.length; i++ )
-                        {
-                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
-                        }
-                    },
-                    error: function( response ){
-                        console.log( response )
+        function refreshCities(){
+            $.ajax({
+                type: 'POST',
+                url: '{{ url('/get/cities/') }}',
+                data: {id: $('select[name="state"]').val(), _token: $('input[name="_token').val() },
+                success: function( response ){
+                    $('select[name="city"]').empty();
+                    for ( var i = 0; i < response.length; i++)
+                    {
+                        $('select[name="city"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
                     }
-                });
-
+                },
+                error: function( response ){
+                    console.log( response );
+                }
             });
-
-            $('select[name="state"]').on('change', function(){
-
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ url('/get/cities/') }}',
-                    data: {id: $(this).val(), _token: $('input[name="_token').val() },
-                    success: function( response ){
-                        $('select[name="city"]').empty();
-                        for ( var i = 0; i < response.length; i++)
-                        {
-                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
-                        }
-
-                    },
-                    error: function( response ){
-                        console.log( response );
+        }
+        function refreshRegions() {
+            $('select[name="city"]').empty();
+            $.ajax({
+                type: 'POST',
+                url: '{{ url('/get/states/')  }}',
+                data: {id: $('select[name="county"]').val(), _token: $('input[name="_token"]').val()  },
+                success: function( response ){
+                    $('select[name="state"]').empty();
+                    for( var i = 0; i < response.length; i++ )
+                    {
+                        $('select[name="state"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
                     }
-                });
-
+                    refreshCities();
+                },
+                error: function( response ){
+                    console.log( response )
+                }
+            });
+        }
+        $(window).on('load', function(){
+            refreshRegions();
+        });
+        $(function() {
+            $('select[name="county"]').on('change', function(){
+                $('select[name="state"]').empty();
+                $('select[name="city"]').empty();
+                refreshRegions();
+            });
+            $('select[name="state"]').on('change', function(){
+                refreshCities();
             });
         });
     </script>

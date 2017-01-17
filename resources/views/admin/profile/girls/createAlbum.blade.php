@@ -62,7 +62,7 @@
             minFileCount: 1,
             maxFileCount: 10,
             overwriteInitial: false,
-            allowedFileExtensions: ["jpg", "png", "gif"],
+            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
             showUpload: false,
         });
     </script>

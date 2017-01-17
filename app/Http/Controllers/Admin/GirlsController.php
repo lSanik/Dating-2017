@@ -86,8 +86,8 @@ class GirlsController extends Controller
             'finance_income' => $this->profile->getEnum('finance_income'),
             'english_level' => $this->profile->getEnum('english_level'),
         ];
-
-        $countries = Country::all();
+        $countries = Country::orderBy('name')->get();
+        //$countries = Country::all();
 
         return view('admin.profile.girls.create')->with([
             'heading'   => 'Добавить девушку',
@@ -120,6 +120,9 @@ class GirlsController extends Controller
             'city'          => 'required',
             'passno'        => 'required',
             'pass_photo'    => 'required',
+            'b_year_pasp'        => 'required',
+            'b_month_pasp'       => 'required',
+            'b_day_pasp'         => 'required',
             'height'        => 'numeric',
             'weight'        => 'numeric',
         ]);
@@ -192,17 +195,18 @@ class GirlsController extends Controller
              *  Add girl passport
              */
 
-           $this->passport->user_id = $this->user->id;
-           $this->passport->cover=$user_passoprt;
-           $this->passport->passno = str_replace(' ', '', $request->input('passno'));
-           $this->passport->date = $request->input('pass_date');
-           $this->passport->save();
+            $this->passport->user_id = $this->user->id;
+            $this->passport->cover=$user_passoprt;
+            $this->passport->date = str_replace(' ', '', date('Y-m-d',strtotime($request->input('b_day_pasp').'-'.$request->input('b_month_pasp').'-'.$request->input('b_year_pasp'))));
+            $this->passport->passno = str_replace(' ', '', $request->input('passno'));
+            $this->passport->save();
 
             /*
             * Create girl profile
             */
 
             $this->profile->user_id = $this->user->id;
+            $this->profile->birthday = date('Y-m-d',strtotime($request->input('b_day').'-'.$request->input('b_month').'-'.$request->input('b_year')));
             $this->profile->gender    = $request->input('gender');
             $this->profile->height    = $request->input('height');
             $this->profile->weight    = $request->input('weight');
@@ -287,7 +291,8 @@ class GirlsController extends Controller
             'finance_income' => $this->profile->getEnum('finance_income'),
             'english_level' => $this->profile->getEnum('english_level'),
         ];
-        $countries = Country::all();
+        $countries = Country::orderBy('name')->get();
+
         $states = State::all();
 
         $statuses = Status::all();
