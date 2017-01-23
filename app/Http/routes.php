@@ -280,9 +280,11 @@ Route::group([  'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['web'],
 ], function(){
     Route::get('/','HomeController@index');
-
+/**/
     Route::get('contacts', 'ContactsController@show');
+    Route::get('contacts/tickets', 'TicketController@index');
     Route::post('contacts/message', 'ContactsController@sendMessage');
+
 
     Route::get('blog', 'BlogController@all');
     Route::get('blog/{id}', 'BlogController@post');
