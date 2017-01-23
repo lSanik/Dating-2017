@@ -347,12 +347,8 @@ class GirlsController extends Controller
             }
         }
 */
-        $user_avatar = 'empty_girl.png';
-
         if ($request->file('avatar')) {
-
-            $user_avatar = $this->upload($request->file('avatar'));
-
+            $user->avatar =  $this->upload($request->file('avatar'));
         }
         //var_dump($request->allFiles()['pass_photo']);
 /*
@@ -363,8 +359,7 @@ class GirlsController extends Controller
             }
         }
 */
-        $this->user->avatar = $user_avatar;
-
+        //$this->user->avatar = $user_avatar;
 
         $user->first_name = $request->input('first_name');
         $user->last_name  = $request->input('second_name');
