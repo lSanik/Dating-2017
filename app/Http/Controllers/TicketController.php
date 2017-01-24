@@ -18,8 +18,9 @@ class TicketController extends Controller
 
         $tickets = DB::table('ticket_messages')
             ->where('from', '=', Auth::id())
-            ->leftJoin('status', 'status.id', '=', 'ticket_messages.status')
-            ->select('ticket_messages.*', 'status.name')
+            ->orderBy('updated_at', 'DESC')
+            ->leftJoin('ticket_statuses', 'ticket_messages.ticket_status_id', '=', 'ticket_statuses.id')
+            ->select('ticket_messages.id', 'ticket_messages.subject', 'ticket_messages.updated_at', 'ticket_statuses.name')
             ->paginate(8);
 
 

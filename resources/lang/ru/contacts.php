@@ -17,4 +17,9 @@ return [
     'date'          => 'Дата',
     'division'      => 'Отдел',
     'modal_label'   => 'Отправьте Ваш вопрос',
+    'download_file' => 'Загрузить файл',
+
+    'requested' => 'на рассмотрении',
+    'answered'  => 'отвечен',
+    'closed'    => 'закрыт',
 ];

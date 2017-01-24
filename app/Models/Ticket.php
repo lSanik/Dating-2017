@@ -10,12 +10,16 @@ class Ticket extends Model
 
     protected $fillable = [
         'from', 'subjects',
-        'subject', 'message', 'status',
+        'subject', 'message', 'status', 'ticket_status_id'
     ];
 
     public function subjects()
     {
         return $this->hasOne('App\Models\TicketSubjects');
+    }
+    public function ticket_status()
+    {
+        return $this->hasOne('App\Models\TicketStatus', 'ticket_status_id');
     }
 
     public function reply()
