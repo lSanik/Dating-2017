@@ -211,6 +211,7 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::post('girl/store', 'Admin\GirlsController@store'); //Store new to db
     Route::post('girl/edit/{id}','Admin\GirlsController@update');// Update db
     Route::post('girl/changeStatus', 'Admin\GirlsController@changeStatus'); //change girlStatus from edit profile page
+    Route::post('girl/changepartner', 'Admin\GirlsController@changePartner'); //change girlStatus from edit profile page
     /** End Girls Profile routing */
 
 

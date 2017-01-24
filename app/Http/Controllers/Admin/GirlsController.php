@@ -51,6 +51,7 @@ class GirlsController extends Controller
     public function index()
     {
         if (Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder')) {
+            $partners = User::where('role_id', '=', '3')->get();
             $girls = User::where('role_id', '=', '5')->get();
         } elseif (Auth::user()->hasRole('Partner')) {
             $girls = User::where('role_id', '=', '5')
@@ -61,6 +62,7 @@ class GirlsController extends Controller
         return view('admin.profile.girls.index')->with([
             'heading' => 'Все девушки',
             'girls'   => $girls,
+            'partners'=> $partners,
         ]);
     }
 
@@ -147,23 +149,12 @@ class GirlsController extends Controller
 
             }
             $user_passoprt = $this->upload($request->file('pass_photo'));
-            //
-/*
-            if(!$request->allFiles()['pass_photo']){
-                foreach ($request->allFiles()['pass_photo'] as $file) {
-                    dump($file);
-                    $pass = $this->upload($file);
-                    array_push($this->passport_photos, $pass);
-                }
-            }
-*/
             /*
              * Create user with role female/male
              *
              */
 
             $this->user->avatar = $user_avatar;
-
             $this->user->webcam = $request->input('webcam') ? 1 : 0;
             $this->user->hot = $request->input('hot') ? 1 : 0;
             $this->user->first_name = $request->input('first_name');
@@ -253,7 +244,13 @@ class GirlsController extends Controller
 
         return redirect('/admin/girls');
     }
-
+    public function changePartner(Request $request){
+        $request->input('girl_id');
+        $user = User::find($request->input('girl_id'));
+        $user->partner_id=$request->input('partner_list');
+        $user->save();
+        return redirect()->back();
+    }
     /**
      * Display the specified resource.
      *
