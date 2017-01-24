@@ -18,6 +18,10 @@ return [
     'date'          => 'Date',
     'division'      => 'Division',
     'modal_label'   => 'Send your message',
+    'requested' => 'requested',
+    'answered'  => 'answered',
+    'closed'    => 'closed',
+    'download_file' => 'Download File',
 
     'office_address' => 'Lorem ipsum dolor sit amet, has an nullam sadipscing ullamcorper, nisl graeci minimum usu no, ne est erat deseruisse vituperata.
 Lorem ipsum dolor sit amet, has an nullam sadipscing ullamcorper, nisl graeci minimum usu no, ne est erat deseruisse vituperata.',
