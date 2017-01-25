@@ -43,6 +43,7 @@ return array(
     'CreatePostsTable' => $baseDir . '/database/migrations/2016_02_21_182300_create_posts_table.php',
     'CreatePresentsTable' => $baseDir . '/database/migrations/2016_03_15_152542_create_presents_table.php',
     'CreatePresentsTranslationsTable' => $baseDir . '/database/migrations/2016_03_15_152844_create_presents_translations_table.php',
+    'CreateProfileImages' => $baseDir . '/database/migrations/2017_01_24_145613_create_profile_images.php',
     'CreateProfileMediaTable' => $baseDir . '/database/migrations/2016_04_19_113757_create_profile_media_table.php',
     'CreateProfilesTable' => $baseDir . '/database/migrations/2016_02_29_115908_create_profiles_table.php',
     'CreateRolesTable' => $baseDir . '/database/migrations/2016_02_19_143634_create_roles_table.php',
