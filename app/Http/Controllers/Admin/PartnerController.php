@@ -193,12 +193,11 @@ class PartnerController extends Controller
         }
 
         // Check password changes
-        if (!empty($request->input('confirm'))) {
-            if ($request->input('confirm') == $request->input('password')) {
-                $user->password = brypt($request->input('password'));
-            }
+        if($request->input('password') !=null){
+            $user->password   = bcrypt($request->input('password'));
         }
 
+        //
         $user->address = $request->input('address');
 
         /* Check new file  */

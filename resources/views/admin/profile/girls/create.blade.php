@@ -22,6 +22,15 @@
         .red{
             color:red!important;
         }
+        #profile_foto .file-input{
+            position: relative!important;
+        }
+        .file-drop-zone-title{
+            opacity: 0!important;
+        }
+        .kv-file-upload.btn.btn-xs.btn-default{
+            display:none;
+        }
     </style>
 
 @stop
@@ -58,6 +67,7 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#osn" aria-controls="osn" role="tab" data-toggle="tab" id="open_main">Основная информация профиля</a></li>
                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" id="open_additional">Данные профиля</a></li>
+                <li role="presentation"><a href="#profile_foto" aria-controls="profile_fot" role="tab" data-toggle="tab" id="profile_fo">Фото профиля</a></li>
                 <li role="presentation"><a href="#status" aria-controls="status" role="tab" data-toggle="tab" id="open_partner">Партнерская информация</a></li>
             </ul>
                 {!! Form::open(['url' => 'admin/girl/store', 'class' => 'form', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
@@ -162,6 +172,18 @@
                                 </div>
                                 <div class="form-group text-center col-md-12">
                                     <a style="color: white;background-color: gray;" class="btn btn-next next" onClick="next_click();">Далее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="profile_foto">
+                        <div class="col-md-12">
+                            <h3 class="text-center"> Фтографии профиля (макс. 10) </h3>
+                            <div class="form-group col-md-12">
+                                <div class="form-group">
+                                    {!! Form::label(trans('profile_photo')) !!}
+
+                                    <input id="profile_photo" type="file" name="profile_photo[]" multiple="multiple" class="file" accept="image/*">
                                 </div>
                             </div>
                         </div>
@@ -420,6 +442,18 @@
             $('select[name="state"]').on('change', function(){
                 refreshCities();
             });
+        });
+    </script>
+    <script>
+        $("#profile_photo").fileinput({
+            uploadUrl: "/file-upload-batch/1",
+
+            uploadAsync: false,
+            minFileCount: 0,
+            maxFileCount: 10,
+            overwriteInitial: false,
+            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+            showUpload: false,
         });
     </script>
 @stop

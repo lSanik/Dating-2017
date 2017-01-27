@@ -12,6 +12,7 @@ use App\Models\State;
 use App\Models\Status;
 use App\Models\User;
 use App\Models\Why;
+use App\Models\profileImages;
 
 use App\Models\Album;
 use App\Models\Images;
@@ -28,10 +29,11 @@ class GirlsController extends Controller
 {
     private $user;
     private $profile;
+    private $profileImages;
     private $passport;
     private $passport_photos = [];
 
-    public function __construct(User $user, Profile $profile, Passport $passport,Album $album)
+    public function __construct(User $user, Profile $profile, Passport $passport,Album $album,profileImages $profileImages)
     {
         $this->middleware('auth');
 
@@ -39,6 +41,7 @@ class GirlsController extends Controller
         $this->Album = $album;
         $this->profile = $profile;
         $this->passport = $passport;
+        $this->profileImages=$profileImages;
         view()->share('new_ticket_messages', parent::getUnreadMessages());
         view()->share('unread_ticket_count', parent::getUnreadMessagesCount());
     }
@@ -51,6 +54,7 @@ class GirlsController extends Controller
     public function index()
     {
         if (Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Moder')) {
+            $partners = User::where('role_id', '=', '3')->get();
             $girls = User::where('role_id', '=', '5')->get();
         } elseif (Auth::user()->hasRole('Partner')) {
             $girls = User::where('role_id', '=', '5')
@@ -61,6 +65,7 @@ class GirlsController extends Controller
         return view('admin.profile.girls.index')->with([
             'heading' => 'Все девушки',
             'girls'   => $girls,
+            'partners'=> $partners,
         ]);
     }
 
@@ -127,43 +132,27 @@ class GirlsController extends Controller
             'weight'        => 'numeric',
         ]);
 
-        //dd($request->input());
 
-        //Проверка паспорта в базе
         $check = $this->passport->where('passno', 'like', str_replace(' ', '', $request->input('passno')))->first();
 
         if (!$check) {
             if ($this->age(date('d/m/Y',strtotime($request->input('b_day').'-'.$request->input('b_month').'-'.$request->input('b_year')))) < 18) {
                 \Session::flash('flash_error', 'Девушка младше 18');
-
                 return redirect(\App::getLocale().'/admin/girl/new');
             }
 
             $user_avatar = 'empty_girl.png';
 
             if ($request->file('avatar')) {
-
                 $user_avatar = $this->upload($request->file('avatar'));
-
             }
             $user_passoprt = $this->upload($request->file('pass_photo'));
-            //
-/*
-            if(!$request->allFiles()['pass_photo']){
-                foreach ($request->allFiles()['pass_photo'] as $file) {
-                    dump($file);
-                    $pass = $this->upload($file);
-                    array_push($this->passport_photos, $pass);
-                }
-            }
-*/
             /*
              * Create user with role female/male
              *
              */
 
             $this->user->avatar = $user_avatar;
-
             $this->user->webcam = $request->input('webcam') ? 1 : 0;
             $this->user->hot = $request->input('hot') ? 1 : 0;
             $this->user->first_name = $request->input('first_name');
@@ -202,9 +191,20 @@ class GirlsController extends Controller
             $this->passport->save();
 
             /*
+             * Create girl profile
+             */
+            if($request->file("profile_photo")!==null){
+                foreach ($request->file("profile_photo") as $p_image){
+                    $profile_image = new profileImages();
+                    $profile_image->url=$this->upload(($p_image));
+                    $profile_image->user_id=$this->user->id;
+                    $profile_image->save();
+                }
+            }
+
+            /*
             * Create girl profile
             */
-
             $this->profile->user_id = $this->user->id;
             $this->profile->birthday = date('Y-m-d',strtotime($request->input('b_day').'-'.$request->input('b_month').'-'.$request->input('b_year')));
             $this->profile->gender    = $request->input('gender');
@@ -253,7 +253,13 @@ class GirlsController extends Controller
 
         return redirect('/admin/girls');
     }
-
+    public function changePartner(Request $request){
+        $request->input('girl_id');
+        $user = User::find($request->input('girl_id'));
+        $user->partner_id=$request->input('partner_list');
+        $user->save();
+        return redirect()->back();
+    }
     /**
      * Display the specified resource.
      *
@@ -275,7 +281,9 @@ class GirlsController extends Controller
      */
     public function edit($id)
     {
+
         $user = $this->user->find($id);
+        $profile_images = $this->profileImages->where('user_id', $id)->get();
         $selects = [
             'gender'    => $this->profile->getEnum('gender'),
             'eye'       => $this->profile->getEnum('eye'),
@@ -309,6 +317,7 @@ class GirlsController extends Controller
             'why'       => $why,
             'albums'    => (new Album)->getAlbums($id),
             'zodiac_list'=>ZodiacSignService::getAll(),
+            'profile_images' => $profile_images,
         ]);
     }
 
@@ -347,12 +356,8 @@ class GirlsController extends Controller
             }
         }
 */
-        $user_avatar = 'empty_girl.png';
-
         if ($request->file('avatar')) {
-
-            $user_avatar = $this->upload($request->file('avatar'));
-
+            $user->avatar =  $this->upload($request->file('avatar'));
         }
         //var_dump($request->allFiles()['pass_photo']);
 /*
@@ -363,8 +368,7 @@ class GirlsController extends Controller
             }
         }
 */
-        $this->user->avatar = $user_avatar;
-
+        //$this->user->avatar = $user_avatar;
 
         $user->first_name = $request->input('first_name');
         $user->last_name  = $request->input('second_name');
@@ -379,6 +383,15 @@ class GirlsController extends Controller
         $profile->birthday = date('Y-m-d',strtotime($request->input('b_day').'-'.$request->input('b_month').'-'.$request->input('b_year')));
         $user->save();
         /* profile DATA */
+
+        if($request->file("profile_photo")!==null){
+            foreach ($request->file("profile_photo") as $p_image){
+                $profile_image = new profileImages();
+                $profile_image->url=$this->upload(($p_image));
+                $profile_image->user_id=$id;
+                $profile_image->save();
+            }
+        }
         $profile->gender    = $request->input('gender');
         $profile->height    = $request->input('height');
         $profile->weight    = $request->input('weight');
@@ -578,6 +591,12 @@ class GirlsController extends Controller
         return redirect('/'.\App::getLocale().'/admin/girl/edit/'.$id."/edit_album/".$aid);
     }
 
+    public function dropProfileFoto($fid){
+        $image = profileImages::find($fid);
+        $this->removeFile('/uploads/'.$image->image);
+        profileImages::destroy($fid);
+        return response('success', 200);
+    }
     /**
      * Drop photo
      *

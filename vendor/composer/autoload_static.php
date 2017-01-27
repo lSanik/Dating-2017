@@ -471,6 +471,7 @@ class ComposerStaticInit8f0a4bee90b51569d79b45668a9f627b
         'CreatePostsTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_21_182300_create_posts_table.php',
         'CreatePresentsTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_15_152542_create_presents_table.php',
         'CreatePresentsTranslationsTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_15_152844_create_presents_translations_table.php',
+        'CreateProfileImages' => __DIR__ . '/../..' . '/database/migrations/2017_01_24_145613_create_profile_images.php',
         'CreateProfileMediaTable' => __DIR__ . '/../..' . '/database/migrations/2016_04_19_113757_create_profile_media_table.php',
         'CreateProfilesTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_29_115908_create_profiles_table.php',
         'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_19_143634_create_roles_table.php',

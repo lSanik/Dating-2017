@@ -8,5 +8,8 @@
 .idea/php.xml
 .idea/phpspec.xml
 .idea/workspace.xml
+.idea/
 webstat/
 public/public/
+public/uploads
+
