@@ -118,7 +118,6 @@ class TicketController extends Controller
                                 ->join('users', 'ticket_reply.r_uid', '=', 'users.id')
                                 ->select('users.first_name', 'users.last_name', 'ticket_reply.reply')
                                 ->get();
-
         return view('admin.ticket.show')->with([
             'heading' => 'Ticket #'.$id,
             'tickets' => $ticket,

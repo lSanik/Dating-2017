@@ -10,7 +10,7 @@
                             @include('client.blocks.profile-sidebar')
                         @endif
                     </div>
-                    <div class="col-md-9 col-sm-9" id="profileFields">
+                    <div class="col-md-10 col-sm-10" id="profileFields">
                         @yield('profileContent')
                     </div>
                 </div>

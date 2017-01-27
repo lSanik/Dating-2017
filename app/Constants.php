@@ -7,7 +7,6 @@
  */
 
 namespace App;
-
 class Constants
 {
     const EXP_MESSAGE = 'message';

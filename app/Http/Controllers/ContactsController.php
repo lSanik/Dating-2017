@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\ContactMessages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\TicketController;
 
 class ContactsController extends Controller
 {
+    /**/
     public function show()
     {
-        return view('client.contacts');
+        if(!Auth::user()){
+            return view('client.contacts');
+        }else {
+            return redirect('contacts/tickets');
+        }
     }
 
     public function sendMessage(Request $request)
