@@ -15,8 +15,11 @@ return [
 	'submit'		=> 'Отправить',
     'status'        => 'Статус',
     'date'          => 'Дата',
-    'division'      => 'Отдел',
-    'modal_label'   => 'Отправьте Ваш вопрос',
+    'reason'      => 'Причина',
+    'send_message' => 'Отправить сообщение',
+    'problem_solved' => 'Вопрос решен',
+    'ticket_closed' => 'Тикет закрыт',
+    'modal_label'   => 'Отправьте Ваше сообщение',
     'download_file' => 'Загрузить файл',
 
     'requested' => 'на рассмотрении',
