@@ -95,6 +95,7 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
     Route::post('remove/album', 'AlbumController@drop');
     Route::post('remove/image', 'AlbumController@dropImage');
 
+
     /** Videos */
     Route::get('profile/{id}/video/add', 'VideoController@create');
 
@@ -204,6 +205,7 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::post('girl/edit/{id}/add_album', 'Admin\GirlsController@addAlbum'); // Create Girl save albums
     Route::post('girl/edit/{id}/edit_album/{aid}', 'Admin\GirlsController@saveAlbume'); // Save editing Girl albums
     Route::post('girl/dropImageAlbum/{aid}', 'Admin\GirlsController@dropImageAlbum'); // Delete photo from Girl albums
+    Route::post('girl/dropProfileFoto/{fid}', 'Admin\GirlsController@dropProfileFoto'); // Delete photo from Girl albums
     //showAlbum
     Route::post('girl/deleteAlbum/{albumID}', 'Admin\GirlsController@deleteAlbum'); // Edit Girl save albums
     //    //admin/girl/deleteAlbum/3

@@ -48,6 +48,9 @@
             transition: 0.3s;
             color: white;
         }
+        .file-input.file-input-new,#profile_foto .file-input{
+            position: relative !important;
+        }
     </style>
 @stop
 
@@ -80,8 +83,9 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#osn" aria-controls="osn" role="tab" data-toggle="tab">Основная информация профиля</a></li>
                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Данные профиля</a></li>
-                <li role="presentation"><a href="#status" aria-controls="status" role="tab" data-toggle="tab">Партнерская информация</a></li>
+                <li role="presentation"><a href="#profile_foto" aria-controls="profile_fot" role="tab" data-toggle="tab" id="profile_fo">Фото профиля</a></li>
                 <li role="presentation"><a href="#photoalbums" aria-controls="photoalbums" role="tab" data-toggle="tab">Фотоальбомы</a></li>
+                <li role="presentation"><a href="#status" aria-controls="status" role="tab" data-toggle="tab">Партнерская информация</a></li>
             </ul>
             {!! Form::open(['url' => '#', 'class' => 'form', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                 <!-- Tab panes -->
@@ -201,6 +205,25 @@
                                 {!! Form::hidden('user_city_id', $user->city_id ) !!}
                                 <select name="city" class="form-control"></select>
                             </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="profile_foto">
+                        <div class="col-md-12">
+                            <h3 class="text-center"> Фтографии профиля (макс. 10) </h3>
+                            <div class="form-group col-md-12">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        @foreach($profile_images as $p_image)
+                                            <div class="photo col-md-3" style="height: 200px;" id="photo-{{$p_image->id}}">
+                                                <img src="{{ url('/uploads/'.$p_image->url) }}" width="100%">
+                                                <a class="delete_gallery" href="#" onclick="deleteProfileFoto(event,'{{$p_image->id}}');"><i class="fa fa-trash-o"></i></a>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    {!! Form::label(trans('profile_photo')) !!}
+                                    <input id="profile_photo" type="file" name="profile_photo[]" multiple="multiple" class="file" accept="image/*">
                                 </div>
                             </div>
                         </div>
@@ -395,7 +418,7 @@
                                     <title>Статус анкеты:
                                         @foreach($statuses as $status)
                                             @if($status->id == $user->status_id)
-                                             {{trans('status.'.$status->name)}}
+                                                {{trans('status.'.$status->name)}}
                                             @endif
                                         @endforeach
                                     </title>
@@ -569,11 +592,29 @@
 
         })
         function deleteGallery($gaId){
-            $.post( "/admin/girl/deleteAlbum/"+$gaId, {_token : $('input[name="_token').val()} ).done( function( data ) {
+            $.post( "/admin/girl/deleteProfileFoto/"+$gaId, {_token : $('input[name="_token').val()} ).done( function( data ) {
 
                 $("#gallerey-"+$gaId).remove();
 
             });
         }
     </script>
+    <script>
+        $("#profile_photo").fileinput({
+            uploadUrl: "/file-upload-batch/1",
+            uploadAsync: false,
+            minFileCount: 0,
+            maxFileCount: (10 - {{count($profile_images)}}),
+            overwriteInitial: false,
+            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+            showUpload: false,
+        });
+        function deleteProfileFoto(event,foID){
+            event.preventDefault();
+            $.post( "/admin/girl/dropProfileFoto/"+foID, {_token : $('input[name="_token').val()} ).done( function( data ) {
+                $("#photo-"+foID).remove();
+            });
+        }
+    </script>
+
 @stop

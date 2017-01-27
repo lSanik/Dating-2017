@@ -18,4 +18,5 @@ class profileImages extends Model
     protected $fillable = [
         'user_id', 'url',
     ];
+
 }

@@ -58,7 +58,7 @@
                         </td>
                         <td> {{ $girl->last_login }} </td>
                         <td>
-                            <a href="{{ url(App::getLocale().'/profile/show/'.$girl->id) }}" class="btn btn-success btn-xs"><i class="fa fa-check"></i></a>
+                            <a target="_blank" href="{{ url(App::getLocale().'/profile/show/'.$girl->id) }}" class="btn btn-success btn-xs"><i class="fa fa-check"></i></a>
                             @if( Auth::user()->hasRole('Owner') )
                                 <a id="button-migrate-user" onclick="ChangeOpen('{{$girl->id}}','{{$girl->partner_id}}');" data-toggle="modal" data-target="#migrate-user" href="#" class="btn btn-warning btn-xs"><i class="fa fa-arrows-h"></i></a>
                             @endif
