@@ -21,7 +21,11 @@ class ChatController extends Controller
         $contact_lists = ChatContactList::where('user_id','=',\Auth::user()->id)->get();
         $user_contact_list_data=array();
         foreach ($contact_lists as $contact_list){
-            $user_contact_list_data[]=User::getUserShtInfo($contact_list['contact_id']);
+            $user_contact_list_data[]=[
+                'contact_info'=> $contact_list,
+                'user_data'=> User::getUserShtInfo($contact_list['contact_id']),
+
+            ];
         }
         if (!\Auth::user()
             || \Auth::user()->hasRole('Male')
