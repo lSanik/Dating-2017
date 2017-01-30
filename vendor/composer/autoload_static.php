@@ -434,6 +434,8 @@ class ComposerStaticInit8f0a4bee90b51569d79b45668a9f627b
     );
 
     public static $classMap = array (
+        'AddDownloadFileToTicketMessages' => __DIR__ . '/../..' . '/database/migrations/2017_01_30_093832_add_download_file_to_ticket_messages.php',
+        'AddDownloadFileToTicketReplies' => __DIR__ . '/../..' . '/database/migrations/2017_01_30_153637_add_download_file_to_ticket_replies.php',
         'AddFileNameToMessagesTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_26_155551_add_file_name_to_messages_table.php',
         'AddMimeTypeAndExtensionToMessagesTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_24_113028_add_mime_type_and_extension_to_messages_table.php',
         'AddNullableToLastReadInParticipantsTable' => __DIR__ . '/../..' . '/database/migrations/2014_11_10_083449_add_nullable_to_last_read_in_participants_table.php',
