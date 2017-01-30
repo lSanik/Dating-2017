@@ -26,11 +26,11 @@ class MessagesController extends Controller
     public function __construct(ExpenseService $expenseService)
     {
         $this->expenseService = $expenseService;
-        
+
         parent::__construct();
     }
 
-    public function index($id){
+    public function index($id=19){
 
         $from_user = \DB::table('messages')
             ->select('message', 'messages.created_at as time', 'users.first_name as name', 'users.avatar as ava')

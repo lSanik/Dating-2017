@@ -15,7 +15,6 @@
         <div class="messages">
 
             @foreach($messages as $m)
-
                 <div class="message">
                     <div class="photo"><img src="{{ url('uploads/'.$m->ava) }}" width="150px"></div>
                     <div class="name">{{ $m->name }}</div>
