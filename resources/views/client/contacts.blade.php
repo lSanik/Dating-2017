@@ -34,7 +34,7 @@
 
         .message{
             width: 100%;
-            word-break: break-all;
+            word-break: break-word;
             margin-top: 5px;
             margin-bottom: 5px;
             padding: 5px;
@@ -42,7 +42,7 @@
 
         .message-support{
             width: 100%;
-            word-break: break-all;
+            word-break: break-word;
             margin-top: 5px;
             margin-bottom: 5px;
             padding: 5px;
@@ -157,7 +157,7 @@
                                     <td>{{ $ticket->id }}</td>
                                     <td>{{ $ticket->subject }}</td>
                                     <td>{{ trans('contacts.'.$ticket->name) }}</td>
-                                    <td>{{ date('Y-m-d H:s', strtotime($ticket->updated_at)) }}</td>
+                                    <td>{{ date('Y-m-d H:i', strtotime($ticket->updated_at)) }}</td>
                                 </tr>
                                 @include('client.tickets.edit')
                             @endforeach

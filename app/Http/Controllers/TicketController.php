@@ -10,11 +10,11 @@ use App\Models\TicketSubjects;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class TicketController extends Controller
 {
     public function index(){
-
         $tickets = DB::table('ticket_messages')
             ->where('from', '=', Auth::id())
             ->orderBy('updated_at', 'DESC')
@@ -26,7 +26,6 @@ class TicketController extends Controller
 
         $subjects = DB::table('ticket_subjects')
             ->orderBy('id', 'ASC')
-            ->select('name')
             ->get();
 
 
@@ -38,28 +37,64 @@ class TicketController extends Controller
 
     }
 
-    public function createTicket(){
-        //@todo Validation
+    public function createTicket(Request $request){
+        $this->validate($request, [
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
 
+        $ticket = new Ticket();
 
+        if ( $request->file('download_file') ) {
+            if ($request->file('download_file')) {
+                $file = $request->file('download_file');
+                $user_file = time().'-'.$file->getClientOriginalName();
+                $destination = public_path().'/uploads/user_files';
+                $file->move($destination, $user_file);
+            }
+            $ticket->download_file = $user_file;
+        }
+
+        $ticket->from = Auth::id();
+        $ticket->status = 1;
+        $ticket->subjects = $request->input('reason');
+        $ticket->subject = $request->input('subject');
+        $ticket->message = $request->input('message');
+        $ticket->ticket_status_id = 1;
+
+        $ticket->save();
+        \Session::flash('success_message', trans('contacts.message_sent'));
+
+        return redirect('/contacts/tickets');
     }
 
     public function createReply(Request $request, $id){
-        //@todo check Validation
+
         $this->validate($request, [
             'reply' => 'required',
         ]);
 
-        $reply = TicketReply::find($id);
+        $reply = new TicketReply();
+
+        if ( $request->file('download_file') ) {
+            if ($request->file('download_file')) {
+                $file = $request->file('download_file');
+                $user_file = time().'-'.$file->getClientOriginalName();
+                $destination = public_path().'/uploads/user_files';
+                $file->move($destination, $user_file);
+            }
+            $reply->download_file = $user_file;
+        }
 
         $reply->message_id = $id;
         $reply->reply = $request->input('reply');
         $reply->r_uid = Auth::id();
 
         $reply->save();
-        //@todo глюк с отображением диалога, лишние админы
-        //@todo add Session::flash()
-        return redirect('contacts/tickets');
+
+        \Session::flash('success_message', trans('contacts.message_sent'));
+
+        return redirect('/contacts/tickets');
     }
 
     public function closeTicket($id){
@@ -70,7 +105,7 @@ class TicketController extends Controller
              ->where('id', $id)
              ->update(['ticket_status_id' => 3]);
 
-        return redirect('contacts/tickets');
+        return redirect('/contacts/tickets');
     }
 
     public function getReply($ticket_id){

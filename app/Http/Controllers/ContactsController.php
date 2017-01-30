@@ -10,18 +10,19 @@ use App\Http\Controllers\TicketController;
 
 class ContactsController extends Controller
 {
-    /**/
     public function show()
     {
+
         if(!Auth::user()){
             return view('client.contacts');
         }else {
-            return redirect('contacts/tickets');
+            return redirect('/contacts/tickets');
         }
     }
 
     public function sendMessage(Request $request)
     {
+
         $rules = [
             'name'    => 'required',
             'email'   => 'required|email',
@@ -45,7 +46,7 @@ class ContactsController extends Controller
         //@todo send email to admin
         \Session::flash('success_message', trans('contacts.success'));
 
-        return redirect(url('/'.\App::getLocale().'/contacts'));
+        return redirect(url('/'.LaravelLocalization::getCurrentLocale().'/contacts'));
     }
 
     public function showUnreaded()
