@@ -21,6 +21,8 @@ return [
     'ticket_closed' => 'Тикет закрыт',
     'modal_label'   => 'Отправьте Ваше сообщение',
     'download_file' => 'Загрузить файл',
+    'downloaded_file' => 'Прикрепленный файл',
+    'message_sent' => 'Ваше сообщение успешно добавлено',
 
     'requested' => 'на рассмотрении',
     'answered'  => 'отвечен',

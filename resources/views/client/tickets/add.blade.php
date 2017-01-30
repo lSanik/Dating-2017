@@ -12,13 +12,6 @@
                             <h4 class="pull-left"><i class="fa fa-question-circle"></i>&nbsp;&nbsp;{{ trans('contacts.modal_label') }}</h4>
                         </header>
 
-                        @if( Session::has('success_message') )
-                            <div class="alert alert-success">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{ Session::get('success_message') }}
-                            </div>
-                        @endif
-
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <ul>
@@ -29,12 +22,12 @@
                             </div>
                         @endif
 
-                        {!! Form::open(['url' => '/contacts/message/', 'class' => 'form', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'files' => true]) !!}
+                        {!! Form::open(['url' => \App::getLocale().'/contacts/tickets/create', 'class' => 'form', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'files' => true]) !!}
                         <div class="form-group">
                             {!! Form::label('reason', trans('contacts.reason')) !!}
                             <select name="reason" class="form-control">
                                 @foreach($subjects as $subject)
-                                    <option value="{{ $subject->name }}">{{ trans('support.'.$subject->name) }}</option>
+                                    <option value="{{ $subject->id }}">{{ trans('support.'.$subject->name) }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -48,7 +41,7 @@
                         </div>
                         <div class="form-group">
                             {!! Form::label('download_file', trans('contacts.download_file')) !!}<br/>
-                            <input type="file" class="form-control file" name="avatar" accept="image/*, .doc, .txt, .pdf">
+                            <input type="file" class="form-control file" name="download_file" accept="image/*, .doc, .docx, .txt, .pdf">
                         </div>
                         <br>
                         <div class="form-group">

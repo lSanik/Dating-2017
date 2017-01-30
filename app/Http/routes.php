@@ -279,8 +279,9 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
 /**
  *  Free Routes
  */
-Route::group([  'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => ['web'],
+
+Route::group([ 'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['web', 'localeSessionRedirect', 'localizationRedirect'],
 ], function(){
     Route::get('/','HomeController@index');
     Route::get('contacts', 'ContactsController@show');

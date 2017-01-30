@@ -255,7 +255,6 @@ class UsersController extends Controller
                 $destination = public_path().'/uploads';
                 $file->move($destination, $user_avatar);
             }
-
             $user->avatar = $user_avatar;
         }
 /*
