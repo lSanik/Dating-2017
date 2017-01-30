@@ -16,12 +16,17 @@ return [
     'submit'    => 'Send',
     'status'        => 'Status',
     'date'          => 'Date',
-    'division'      => 'Division',
+    'reason'      => 'Reason',
+    'send_message' => 'Send message',
+    'problem_solved' => 'My problem has been solved',
+    'ticket_closed' => 'The ticket has been closed',
     'modal_label'   => 'Send your message',
     'requested' => 'requested',
     'answered'  => 'answered',
     'closed'    => 'closed',
     'download_file' => 'Download File',
+    'downloaded_file' => 'Downloaded file',
+    'message_sent' => 'Your message was successfully added',
 
     'office_address' => 'Lorem ipsum dolor sit amet, has an nullam sadipscing ullamcorper, nisl graeci minimum usu no, ne est erat deseruisse vituperata.
 Lorem ipsum dolor sit amet, has an nullam sadipscing ullamcorper, nisl graeci minimum usu no, ne est erat deseruisse vituperata.',

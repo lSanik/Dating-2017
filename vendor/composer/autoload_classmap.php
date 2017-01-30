@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddDownloadFileToTicketMessages' => $baseDir . '/database/migrations/2017_01_30_093832_add_download_file_to_ticket_messages.php',
+    'AddDownloadFileToTicketReplies' => $baseDir . '/database/migrations/2017_01_30_153637_add_download_file_to_ticket_replies.php',
     'AddFileNameToMessagesTable' => $baseDir . '/database/migrations/2015_12_26_155551_add_file_name_to_messages_table.php',
     'AddMimeTypeAndExtensionToMessagesTable' => $baseDir . '/database/migrations/2015_12_24_113028_add_mime_type_and_extension_to_messages_table.php',
     'AddNullableToLastReadInParticipantsTable' => $baseDir . '/database/migrations/2014_11_10_083449_add_nullable_to_last_read_in_participants_table.php',

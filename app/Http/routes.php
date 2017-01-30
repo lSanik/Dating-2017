@@ -279,12 +279,16 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
 /**
  *  Free Routes
  */
-Route::group([  'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => ['web'],
+
+Route::group([ 'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['web', 'localeSessionRedirect', 'localizationRedirect'],
 ], function(){
     Route::get('/','HomeController@index');
     Route::get('contacts', 'ContactsController@show');
     Route::get('contacts/tickets', 'TicketController@index');
+    Route::get('contacts/tickets/close/{id}', 'TicketController@closeTicket');
+    Route::post('contacts/tickets/create', 'TicketController@createTicket');
+    Route::post('contacts/tickets/reply/{id}', 'TicketController@createReply');
     Route::post('contacts/message', 'ContactsController@sendMessage');
 
 

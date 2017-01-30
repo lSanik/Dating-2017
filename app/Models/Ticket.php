@@ -10,7 +10,7 @@ class Ticket extends Model
 
     protected $fillable = [
         'from', 'subjects',
-        'subject', 'message', 'status', 'ticket_status_id'
+        'subject', 'message', 'status', 'ticket_status_id', 'download_file'
     ];
 
     public function subjects()
