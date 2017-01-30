@@ -30,22 +30,24 @@
                             @if( $ticket->download_file != null )
                                 <a href="{{ url('/uploads/user_files/'.$ticket->download_file) }}"><i class="fa fa-download"> {{ trans('contacts.downloaded_file') }}</i></a>
                             @endif
-
                         </div>
-                        @foreach($this_r->getReply($ticket->id) as $reply)
-                            @if($ticket->from != $reply->r_uid)
-                                <div class="message-support">
-                            @else
-                                    <div class="message">
+
+                    @foreach($this_r->getReply($ticket->id) as $reply)
+                        <div
+                        @if($ticket->from != $reply->r_uid)
+                             class="message-support"
+                        @else
+                             class="message"
+                        @endif
+                            >
+                            <div class="photo"><img src="{{ url('/uploads/'.$reply->avatar) }}" width="150px"></div>
+                                    <div class="name"><strong>{{ $reply->first_name }}</strong>  <i>{{ date('Y-m-d H:i', strtotime($reply->updated_at)) }}</i></div>
+                            <div class="text-left">{{ $reply->reply }}</div>
+                            @if( $reply->download_file != null )
+                                <a href="{{ url('/uploads/user_files/'.$reply->download_file) }}"><i class="fa fa-download"> {{ trans('contacts.downloaded_file') }}</i></a>
                             @endif
-                                <div class="photo"><img src="{{ url('/uploads/'.$reply->avatar) }}" width="150px"></div>
-                                        <div class="name"><strong>{{ $reply->first_name }}</strong>  <i>{{ date('Y-m-d H:i', strtotime($reply->updated_at)) }}</i></div>
-                                <div class="text-left">{{ $reply->reply }}</div>
-                                @if( $reply->download_file != null )
-                                    <a href="{{ url('/uploads/user_files/'.$reply->download_file) }}"><i class="fa fa-download"> {{ trans('contacts.downloaded_file') }}</i></a>
-                                @endif
-                            </div>
-                        @endforeach
+                        </div>
+                    @endforeach
 
                     </div>
                     <br>
@@ -66,10 +68,8 @@
                             <input type="button" value="{{ trans('contacts.problem_solved') }}" class="btn btn-white grg-form-button"
                                    onclick='location.href="{{ url('contacts/tickets/close/'.$ticket->id) }}"'>
                         </div>
-
                         {!! Form::close() !!}
                     @endif
-                    </div>
                 </div>
             </div>
         </div>
