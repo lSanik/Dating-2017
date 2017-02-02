@@ -1,6 +1,47 @@
 @extends('client.app')
 
 @section('content')
+
+<style>
+    /* Style tabs list */
+    ul.tab {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+    /* Float the list items side by side */
+    ul.tab li {float: left; width: 33.3%;}
+
+    /* Style the links inside the list items */
+    ul.tab li a {
+        display: inline-block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        transition: 0.3s;
+        font-size: 17px;
+        width: 100%;
+    }
+
+    /* Change background color of links on hover */
+    ul.tab li a:hover {background-color: #ddd;}
+
+    /* Create an active/current tablink class */
+    ul.tab li a:focus, .active {background-color: #ccc;}
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+</style>
     <div class="container-fluid content-bg">
         <div class="row map-bg">
             <div class="col-md-10 col-md-offset-1" id="chat_container">
@@ -35,37 +76,135 @@
                             VIDEO
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 container-right-list">
                         <div id="user" class="bordered">
                             PHOTO
                         </div>
-                        <div id="contacts" class="bordered">
-                            @foreach($user_contact_list_data as $contact)
-                                <div class="contact">
-                                    <a class="" href="#contact" data-id="{{$contact[0]->sessionID}}">
-                                        <div class="online">
-                                            <div class="is_online @if($contact[0]->sessionID==null) {{'no'}} @endif">
-
-                                            </div>
+                        <ul class="tab">
+                            <li><a href="javascript:void(0)" class="tablinks active" onclick="openCity(event, 'tab-chat')"><i class="fa fa-comments-o" aria-hidden="true"></i>
+                                </a></li>
+                            <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'tab-like')"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+                            <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'tab-block')"><i class="fa fa-ban" aria-hidden="true"></i></a></li>
+                        </ul>
+                        <?php
+                        $tab_chat =  '<div id="tab-chat" class="tabcontent" style="display: block;">';
+                        $tab_like =  '<div id="tab-like" class="tabcontent">';
+                        $tab_block = '<div id="tab-block" class="tabcontent">';
+                        ?>
+                        @foreach($user_contact_list_data as $user_counter)
+                            @foreach($user_counter['user_data'] as $contact)
+                                @if($user_counter['contact_info']->status == 1)
+                                    <?php
+                                        $url=url('/uploads/'.$contact->avatar);
+                                        $data_bday= date('Y-m-d') - $contact->birthday;
+                                        $is_inline=($contact->sessionID==null)?('no'):('');
+                                    $tab_chat.="
+                                        <div class=\"contact\">
+                                            <a  href=\"#contact\" data-id=\"".$contact->sessionID."\">
+                                                    <div class=\"online\">
+                                                    <div class=\"is_online ".$is_inline."\">
+                                                    </div>
+                                                    </div>
+                                                <div class=\"image\">
+                                                    <img style=\"width: 100%;border-radius: 50px;\" src=\"".$url."\">
+                                                </div>
+                                                <div class=\"name\">
+                                                    <span>". $contact->first_name . $contact->last_name ."</span>
+                                                </div>
+                                                <div class=\"age\">
+                                                    <span>(".$data_bday.")</span>
+                                                </div>
+                                            </a>
                                         </div>
-                                        <div class="image">
-                                            <img style="width: 100%;border-radius: 50px;" src="{{ url('/uploads/'.$contact[0]->avatar) }}">
+                                    ";?>
+                                @elseif($user_counter['contact_info']->status == 2)
+                                    <?php
+                                    $url=url('/uploads/'.$contact->avatar);
+                                    $data_bday= date('Y-m-d') - $contact->birthday;
+                                    $is_inline=($contact->sessionID==null)?('no'):('');
+                                    $tab_like.="
+                                        <div class=\"contact\">
+                                            <a  href=\"#contact\" data-id=\"".$contact->sessionID."\">
+                                                    <div class=\"online\">
+                                                    <div class=\"is_online ".$is_inline."\">
+                                                    </div>
+                                                    </div>
+                                                <div class=\"image\">
+                                                    <img style=\"width: 100%;border-radius: 50px;\" src=\"".$url."\">
+                                                </div>
+                                                <div class=\"name\">
+                                                    <span>". $contact->first_name . $contact->last_name ."</span>
+                                                </div>
+                                                <div class=\"age\">
+                                                    <span>(".$data_bday.")</span>
+                                                </div>
+                                            </a>
                                         </div>
-                                        <div class="name">
-                                            <span>{{ $contact[0]->first_name }} {{ $contact[0]->last_name }}</span>
+                                    ";?>
+                                @elseif($user_counter['contact_info']->status == 3)
+                                    <?php
+                                    $url=url('/uploads/'.$contact->avatar);
+                                    $data_bday= date('Y-m-d') - $contact->birthday;
+                                    $is_inline=($contact->sessionID==null)?('no'):('');
+                                    $tab_block.="
+                                        <div class=\"contact\">
+                                            <a  href=\"#contact\" data-id=\"".$contact->sessionID."\">
+                                                    <div class=\"online\">
+                                                    <div class=\"is_online ".$is_inline."\">
+                                                    </div>
+                                                    </div>
+                                                <div class=\"image\">
+                                                    <img style=\"width: 100%;border-radius: 50px;\" src=\"".$url."\">
+                                                </div>
+                                                <div class=\"name\">
+                                                    <span>". $contact->first_name . $contact->last_name ."</span>
+                                                </div>
+                                                <div class=\"age\">
+                                                    <span>(".$data_bday.")</span>
+                                                </div>
+                                            </a>
                                         </div>
-                                        <div class="age">
-                                            <span>({{ date('Y-m-d') - $contact[0]->birthday }})</span>
-                                        </div>
-                                    </a>
-                                </div>
+                                    ";?>
+                                @endif
                             @endforeach
+                        @endforeach
+                        <?php
+                        $tab_chat.= '</div>';
+                        $tab_like.= '</div>';
+                        $tab_block.=  '</div>';
+                        ?>
+                        <div id="contacts" class="bordered">
+                                {!! $tab_chat !!}
+                                {!! $tab_like !!}
+                                {!! $tab_block !!}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+<script>
+    function openCity(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the link that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
 
     <div class="popup-send-invite">
         <div class="chat-invite">Пригласить в чат <span class="name">Наталья </span></div>

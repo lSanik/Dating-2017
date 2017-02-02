@@ -11,6 +11,8 @@ use App\Services\ExpenseService;
 use Illuminate\Http\Request;
 use App\Models\Messages;
 
+use App\Models\ChatContactList;
+
 use App\Http\Requests;
 use Illuminate\Support\Facades\Validator;
 
@@ -48,12 +50,36 @@ class MessagesController extends Controller
         
         $messages = array_merge($from_user, $to_user);
 
+        $user = User::find(\Auth::user()->id);
+        $contact_lists = ChatContactList::where('user_id','=',\Auth::user()->id)->get();
+        $user_contact_list_data=array();
+        foreach ($contact_lists as $contact_list){
+            $user_contact_list_data[]=[
+                'contact_info'=> $contact_list,
+                'user_data'=> User::getUserShtInfo($contact_list['contact_id']),
+
+            ];
+        }
+        if (!\Auth::user()
+            || \Auth::user()->hasRole('Male')
+            || \Auth::user()->hasRole('Alien')
+        ){
+            $users = $this->getUsers(5);
+        } else {
+            $users = $this->getUsers(4);
+        }
+
+
         usort($messages, [$this, 'cmp_time']);
 
         return view('client.profile.messages')->with([
             'messages' => $messages,
-            'to' => $id
+            'to' => $id,
+            'user'  => $user,
+            'users' => $users,
+            'user_contact_list_data' =>$user_contact_list_data
         ]);
+
     }
 
     public function cmp_time($a, $b)
