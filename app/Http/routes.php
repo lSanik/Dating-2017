@@ -74,6 +74,7 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
 
     Route::post('chat/ajax', 'ChatController@ajax');
     /** Users profile */
+    Route::get('profile/message', 'MessagesController@index');
     Route::get('profile/{id}', 'UsersController@edit');
     Route::get('profile/{id}/photo', 'UsersController@profilePhoto');
     Route::get('profile/{id}/video', 'UsersController@profileVideo');
@@ -81,7 +82,7 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
     Route::get('profile/{id}/smiles', 'UsersController@profileSmiles');
     Route::get('profile/{id}/gifts', 'UsersController@profileGifts');
     Route::get('profile/{id}/finance', 'UsersController@profileFinance');
-    Route::get('profile/{id}/message', 'MessagesController@index');
+
 
     Route::get('profile/album/add', 'AlbumController@create');
     Route::get('profile/{id}/gallery/{aid}', 'AlbumController@show');
@@ -89,7 +90,7 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
     Route::post('profile/album/add', 'AlbumController@make');
     //todo edit album
 
-    Route::post('profile/{id}/message', 'MessagesController@send');
+    Route::post('profile/message', 'MessagesController@send');
     Route::post('profile/update/{id}', 'UsersController@update');
 
     Route::post('remove/album', 'AlbumController@drop');
