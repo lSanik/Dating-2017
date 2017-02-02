@@ -57,6 +57,7 @@ class GirlsController extends Controller
             $partners = User::where('role_id', '=', '3')->get();
             $girls = User::where('role_id', '=', '5')->get();
         } elseif (Auth::user()->hasRole('Partner')) {
+
             $girls = User::where('role_id', '=', '5')
                                 ->where('partner_id', '=', Auth::user()->id)
                                 ->get();

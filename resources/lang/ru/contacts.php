@@ -23,6 +23,7 @@ return [
     'download_file' => 'Загрузить файл',
     'downloaded_file' => 'Прикрепленный файл',
     'message_sent' => 'Ваше сообщение успешно добавлено',
+    'replied_by' => 'Ответ от',
 
     'requested' => 'на рассмотрении',
     'answered'  => 'отвечен',

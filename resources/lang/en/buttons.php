@@ -7,4 +7,5 @@ return [
     'profile' => 'Profile',
     'logout'  => 'Log out',
     'save'	  => 'Save',
+    'close' =>   'Close',
 ];
