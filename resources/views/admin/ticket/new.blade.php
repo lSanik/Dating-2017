@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="inbox-body">
-            {!! Form::open(['url' => '/admin/support/', 'class' => 'form-horizontal', 'method' => 'POST']) !!}
+            {!! Form::open(['url' => '/admin/support/', 'class' => 'form-horizontal', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
 
                 <div class="compose-mail">
 
@@ -53,8 +53,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            {!! Form::label('files', trans('/admin/support.screen')) !!}
-                            <input type="file" class="form-control file" name="files[]" accept="image/*" multiple>
+                            {!! Form::label('download_file', trans('contacts.download_file')) !!}<br/>
+                            <input type="file" class="form-control file" name="download_file" accept="image/*, .doc, .docx, .txt, .pdf">
                         </div>
                         <hr/>
                 </div>

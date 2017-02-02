@@ -293,6 +293,9 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Smiles', 'from');
     }
 
+    public static function GirlsByPartner($partner_id){
+        return \DB::table('users')->select('id')->where('partner_id','=',$partner_id)->get();
+    }
     /** Partner ID */
     public static function getPartnerId($girl_id)
     {

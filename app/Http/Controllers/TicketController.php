@@ -42,7 +42,7 @@ class TicketController extends Controller
             'subject' => 'required',
             'message' => 'required',
         ]);
-
+        //dump($request);
         $ticket = new Ticket();
 
         if ( $request->file('download_file') ) {
@@ -56,7 +56,7 @@ class TicketController extends Controller
         }
 
         $ticket->from = Auth::id();
-        $ticket->status = 1;
+        $ticket->status = 0;
         $ticket->subjects = $request->input('reason');
         $ticket->subject = $request->input('subject');
         $ticket->message = $request->input('message');
@@ -92,6 +92,10 @@ class TicketController extends Controller
 
         $reply->save();
 
+        DB::table('ticket_messages')
+            ->where('id', $id)
+            ->update(['status' => 0, 'ticket_status_id' => 1]);
+
         \Session::flash('success_message', trans('contacts.message_sent'));
 
         return redirect('/contacts/tickets');
@@ -103,7 +107,7 @@ class TicketController extends Controller
 
           DB::table('ticket_messages')
              ->where('id', $id)
-             ->update(['ticket_status_id' => 3]);
+             ->update(['ticket_status_id' => 3, 'status' => 2]);
 
         return redirect('/contacts/tickets');
     }
