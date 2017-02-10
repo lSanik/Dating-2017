@@ -18,8 +18,12 @@ class Country extends Model
             return $this->orderBy('name_en', 'ASC')->get();
         }
     }
-    protected function states()
+    protected function state()
     {
-        $this->hasMany('State');
+        return $this->hasMany('App\Model\State');
+    }
+    public function user()
+    {
+        return $this->hasMany('App\Models\User');
     }
 }

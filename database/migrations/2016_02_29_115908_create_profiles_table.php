@@ -24,23 +24,43 @@ class CreateProfilesTable extends Migration
             $table->float('height'); //рос
             $table->float('weight'); //вес
 
-            $table->enum('eye', ['Amber', 'Blue', 'Brown', 'Gray', 'Green', 'Hazel']); //цвет глаз
+            $table->enum('eye', ['---', 'amber', 'blue', 'brown', 'gray', 'green', 'hazel']); //цвет глаз
 
-            $table->enum('hair', ['Black hair', 'Natural black hair', 'Deepest brunette hair', 'Dark brown hair',
-                'Medium brown hair', 'Lightest brown hair', 'Natural brown hair', 'Light brown hair', 'Chestnut brown hair',
-                'Light chestnut brown hair', 'Auburn brown hair', 'Auburn hair', 'Copper hair', 'Red hair', 'Titian hair',
-                'Strawberry blond hair', 'Light blonde hair', 'Dark blond hair', 'Golden blond hair', 'Medium blond hair',
-                'Grey hair', 'White hair', 'White hair caused by albinism', ]); // цвет волос
+            $table->enum('hair', [
+                '---',
+                'black',
+                'blonde',
+                'brown',
+                'dark_brown',
+                'chestnut_brown',
+                'light_brown',
+                'ginger',
+                'red',
+                'dark_blonde',
+                'fair',
+                'grey',
+                'albinos',]); // цвет волос
 
-            $table->enum('education', ['School', 'Bachelor', 'Master', 'Ph.D']); //образование
-            $table->enum('kids', ['yes', 'no']); // дети
-            $table->enum('want_kids', ['yes', 'no']); //завести детей
+            $table->enum('education', [
+                '---',
+                'none',
+                'elementary',
+                'school',
+                'high_school',
+                'college',
+                'university',
+                'unfinished_higher',
+                'phd_degree',
+                'student',]); //образование
 
-            $table->enum('family', ['yes', 'no', 'look']); // семейное положение
-            $table->enum('religion', ['Christianity', 'Gnosticism', 'Islam', 'Judaism', 'Catholicism', 'Buddhism', 'Hinduism', 'Shinto', 'Taoism']); //религия
+            $table->enum('kids', ['---', 'no', '1', '2', '3', '4', 'tell_you_later']); // дети
+            $table->enum('want_kids', ['---', 'yes', 'no', 'tell_you_later']); //завести детей
 
-            $table->enum('smoke', ['yes', 'no', 'times']); //курение
-            $table->enum('drink', ['yes', 'no', 'times']); //выпивка
+            $table->enum('family', ['---', 'divorced', 'married', 'not_married', 'widowed']); // семейное положение
+            $table->enum('religion', ['---','atheism', 'christianity', 'gnosticism', 'islam', 'judaism', 'catholicism', 'buddhism', 'hinduism', 'shinto', 'taoism']); //религия
+
+            $table->enum('smoke', ['---', 'yes', 'no', 'times']); //курение
+            $table->enum('drink', ['---', 'yes', 'no', 'times']); //выпивка
 
             $table->string('occupation');
 

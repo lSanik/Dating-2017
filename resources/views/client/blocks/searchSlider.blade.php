@@ -95,8 +95,8 @@
 	                        <div class="col-md-3 form-group">
 	                            <label for="eyes">{{ trans('profile.eyes') }}</label>
 	                            <select name="eyes" class="form-control">
-	                                @foreach($selects['eye'] as $eye)
-	                                    <option value="{{ $eye }}">{{ trans('profile.'.$eye) }}</option>
+	                                @foreach($selects['eyes'] as $eyes)
+	                                    <option value="{{ $eyes }}">{{ trans('profile.'.$eyes) }}</option>
 	                                @endforeach
 	                            </select>
 	                        </div>

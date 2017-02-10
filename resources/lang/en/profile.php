@@ -1,75 +1,18 @@
 <?php
 
 return [
-    'yes'       => 'yes',
-    'no'        => 'no',
-    'times'     => 'times',
-    'male'      => 'male',
-    'female'    => 'female',
-
-    /* Eyes */
-
-    'Amber'     => 'Amber',
-    'Blue'      => 'Blue',
-    'Brown'     => 'Brown',
-    'Gray'      => 'Gray',
-    'Green'     => 'Green',
-    'Hazel'     => 'Hazel',
-
-    /*  Hair */
-    'Black hair'                        => 'Black hair',
-    'Natural black hair'                => 'Natural black hair',
-    'Deepest brunette hair'             => 'Deepest brunette hair',
-    'Dark brown hair'                   => 'Dark brown hair',
-    'Medium brown hair'                 => 'Medium brown hair',
-    'Lightest brown hair'               => 'Lightest brown hair',
-    'Chestnut brown hair'               => 'Chestnut brown hair',
-    'Light chestnut brown hair'         => 'Light chestnut brown hair',
-    'Auburn brown hair'                 => 'Auburn brown hair',
-    'Auburn hair'                       => 'Auburn hair',
-    'Copper hair'                       => 'Copper hair',
-    'Red hair'                          => 'Red hair',
-    'Titian hair'                       => 'Titian hair',
-    'Strawberry blond hair'             => 'Strawberry blond hair',
-    'Light blonde hair'                 => 'Light blonde hair',
-    'Dark blond hair'                   => 'Dark blond hair',
-    'Golden blond hair'                 => 'Golden blond hair',
-    'Medium blond hair'                 => 'Medium blond hair',
-    'Gray hair'                         => 'Gray hair',
-    'White hair'                        => 'White hair',
-    'White hair caused by albinism'     => 'White hair caused by albinism',
-    'Natural brown hair'                => 'Natural brown hair',
-    'Light brown hair'                  => 'Light brown hair',
-    'Grey hair'                         => 'Grey hair',
-
-    /* Education */
-
-    'School'        => 'School',
-    'Bachelor'      => 'Bachelor',
-    'Master'        => 'Master',
-    'Pd.D'          => 'Pd.D',
-
-    /* Religion */
-
-    'Christianity'      => 'Christianity',
-    'Gnosticism'        => 'Gnosticism',
-    'Islam'             => 'Islam',
-    'Judaism'           => 'Judaism',
-    'Catholicism'       => 'Catholicism',
-    'Buddhism'          => 'Buddhism',
-    'Hinduism'          => 'Hinduism',
-    'Shinto'            => 'Shinto',
-    'Taoism'            => 'Taoism',
 
     /* Menu */
 
     'my'        => 'My Profile',
+    'primary'   => 'My profile',
     'photo'     => 'My Photos',
     'video'     => 'My Video',
     'smiles'    => 'Smiles',
     'gifts'     => 'My Gifts',
+    'Myphotos'    => 'My photos',
 
-     /* Form */
+    /* -- Form Profile Labels -- */
 
     'first_name'            => 'First Name',
     'last_name'             => 'Last Name',
@@ -78,64 +21,169 @@ return [
     'password'              => 'Password',
     'password_confirmation' => 'Confirm password',
 
-    /* Profile */
+    /* -- Other Profile Labels -- */
+
+    'name'      => 'Name',
+    'surname'   => 'Surname',
+    'phone'     => 'Phone',
+    'avatar'    => 'Photo',
     'age'       => 'Age',
     'birthday'  => 'Birthday',
     'country'   => 'Country',
+    'state'     => 'State',
     'city'      => 'City',
     'horoscope' => 'Horoscope',
-    'height'    => 'Height',
-    'weight'    => 'Weight',
+    'height'    => 'Height, sm',
+    'weight'    => 'Weight, kg',
     'hair'      => 'Hair',
     'eyes'      => 'Eyes',
-    'education' => 'Aducation',
+    'eye'       => 'Eyes',
+    'education' => 'Education',
+    'occupation'=>'Occupation',
+    'english_level' => 'English level',
+    'know_lang' => 'Knowledge of languages',
+    'about'     => 'About',
     'religion'  => 'Religion',
+    'family'    => 'Marital status',
     'kids'      => 'Kids',
+    'kids_live' => 'Kids live with me',
+    'want_kids' => 'Want kids',
     'smoke'     => 'Smoke',
     'drink'     => 'Drink',
-    '---'       => '---',
+
+    'lookingFor'=> 'Looking for a',
+    'look'      => 'look',
+    'looking'   => 'Looking',
+    'findAPerson'=> 'Find a person',
+
+    'l_age_start'=> 'Age from',
+    'l_age_stop'=> 'Age to',
+    'l_height_start'=> 'Height from',
+    'l_height_stop'=> 'Height to',
+    'l_weight_start'=> 'Weight from',
+    'l_weight_stop'=> 'Weight to',
+
     'antiscram' => 'Anti-Scam Policy',
     'finance'   => 'Finance',
+    'finance_income' => 'Finance income',
+    'zodiac' => 'Zodiac',
 
+
+    /* -- Additional symbols and phrases -- */
+
+    '---'       => '---',
     'empty'     => 'Please fill your profile data',
-
-    /** Smiles */
-    'smile'     => 'You have wink from ',
-
-
-    /* Family */
-    'family'    => 'Family',
-    'look'      => 'look',
-
-    /* want _k*/
-    'want_k'    => 'Want kids',
-    'state'     => 'State',
-    'findAPerson'=> 'Find a person',
-    'about'     => 'About',
-    'looking'   => 'Looking',
-    'edit'      => 'Edit',
-    'primary'   => 'My profile',
-    'avatar'    => 'Photo',
-    'phone'     => 'Phone',
-    'l_age_stop'=> 'Age to',
-    'l_age_start'=> 'Age from',
-    'occupation'=>'Occupation',
-    'eye'       => 'Eye',
-    'want_kids' => 'Want kids',
-    'lookingFor'=> 'Looking for a',
     'additionalInformation' => 'Additional Information',
     'placeholder_name' => 'Name',
     'placeholder_surname' => 'Surname',
     'mainInformation'   => 'Main Information',
-    'name'  => 'Name',
-    'surname'   => 'Surname',
-    'phone' => 'Phone',
-    'password'  => 'Password',
-    'Myphotos'    => 'My photos',
+
+    'edit'      => 'Edit',
+    'update'    => 'Update',
     'company'   => 'Company',
     'info'  => 'Info',
     'contacts'  => 'Contacts',
-    'update'    => 'Update',
 
+    /* -- Smiles -- */
+
+    'smile'     => 'You have wink from ',
+
+    /* -- Attributes -- */
+
+    /* Gender */
+    'male'      => 'male',
+    'female'    => 'female',
+
+    /* Eyes */
+
+    'amber'     => 'Amber',
+    'blue'      => 'Blue',
+    'brown'     => 'Brown',
+    'gray'      => 'Gray',
+    'green'     => 'Green',
+    'hazel'     => 'Hazel',
+
+    /*  Hair */
+
+    'black'   => 'Black hair',
+    'blonde'  => 'Blonde',
+    'brown'   => 'Brown',
+    'dark_brown'  => 'Dark brown',
+    'chestnut_brown' => 'Chestnut brown',
+    'light_brown' => 'Light brown',
+    'ginger'  => 'Ginger',
+    'red'     => 'Red',
+    'dark_blonde' => 'Dark Blonde',
+    'fair' => 'Fair',
+    'grey' => 'Grey',
+    'albinos'  => 'White hair caused by albinism',
+
+    /* Education */
+
+    'none'          => 'None',
+    'elementary'    => 'Elementary',
+    'school'        => 'School',
+    'high_school'   => 'High school',
+    'college'       => 'College',
+    'university'    => 'University',
+    'unfinished_higher' => 'Unfinished higher',
+    'phd_degree'    => 'PhD degree',
+    'student'       => 'Student',
+
+    /* Religion */
+
+    'atheism'           => 'Atheism',
+    'christianity'      => 'Christianity',
+    'gnosticism'        => 'Gnosticism',
+    'islam'             => 'Islam',
+    'judaism'           => 'Judaism',
+    'catholicism'       => 'Catholicism',
+    'buddhism'          => 'Buddhism',
+    'hinduism'          => 'Hinduism',
+    'shinto'            => 'Shinto',
+    'taoism'            => 'Taoism',
+
+    /* Kids */
+
+    '1' => '1',
+    '2' => '2',
+    '3' => '3',
+    '4' => '4',
+    'live_with_me' => 'Live with me',
+    'not_living_with_me' => 'Not living with me',
+    'tell_you_later' => 'I will tell your later',
+
+    /* Marital status */
+
+    'Ddvorced_male' => 'Divorced',
+    'widowed_male' => 'Widowed',
+    'not_married_male' => 'Not married',
+    'married_male' =>'Married',
+
+    'divorced_female' => 'Divorced',
+    'widowed_female' => 'Widowed',
+    'not_married_female' => 'Not married',
+    'married_female' =>'Married',
+
+    /* Finance Income */
+
+    'no_income' => 'No income',
+    'low' => 'Low',
+    'medium' => 'Medium',
+    'high' => 'High',
+
+    /* English Level */
+
+    'very_bad' => 'Very bad',
+    'basic' => 'Basic',
+    'intermediate' => 'Intermediate',
+    'good' => 'Good',
+    'fluent' => 'Fluent',
+
+    /* Drink, Smoke */
+
+    'yes'       => 'yes',
+    'no'        => 'no',
+    'times'     => 'times',
 
 ];

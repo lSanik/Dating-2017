@@ -14,6 +14,14 @@ class State extends Model
 
     public function country()
     {
-        $this->hasOne('Country');
+        $this->belongsTo('App\Models\Country');
+    }
+    public function city()
+    {
+        $this->hasMany('App\Models\City');
+    }
+    public function user()
+    {
+        $this->hasMany('App\Models\User');
     }
 }

@@ -12,13 +12,13 @@ class City extends Model
         'city', 'country_id',
     ];
 
-    public function Countries()
+    public function state()
     {
-        return $this->hasMany('App\Models\Country', 'country_id');
+        return $this->belongsTo('App\Models\State');
     }
 
-    public function User()
+    public function user()
     {
-        return $this->belongsTo('App\Models\User', 'city_id');
+        return $this->hasMany('App\Models\User');
     }
 }

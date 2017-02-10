@@ -71,8 +71,9 @@
 <script type="text/javascript" src="{{ url('/assets/js/bootstrap-fileinput-master/js/fileinput.js') }}"></script>
 <script type="text/javascript" src="{{ url('/assets/js/file-input-init.js') }}"></script>
 <script>
-    function get_cities( $id )
+    function get_cities( $id, abc )
     {
+
         $.ajax({
             type: 'POST',
             url: '{{ url('/get/cities/') }}',

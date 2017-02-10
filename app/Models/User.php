@@ -160,17 +160,25 @@ class User extends Authenticatable
 
     /** End roles */
 
-    /** Cities */
+    /** City, state, country */
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function city()
     {
-        return $this->hasOne('App\Models\City', 'id');
+        return $this->belongsTo('App\Models\City');
+    }
+    public function state()
+    {
+        return $this->belongsTo('App\Models\State');
+    }
+    public function country()
+    {
+        return $this->belongsTo('App\Models\Country');
     }
 
-    /** End cities */
+    /** End city, state, country */
 
     /** Presents for partner */
 

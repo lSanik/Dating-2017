@@ -51,7 +51,9 @@ class UsersController extends Controller
                 'users.country_id',
                 'profile.*',
                 'countries.name as country',
+                'countries.name_en as country_en',
                 'cities.name as city',
+                'cities.name_en as city_en',
             ])
             ->join('profile', 'profile.user_id', '=', 'users.id')
             ->leftjoin('countries', 'countries.id', '=', 'users.country_id')
@@ -80,13 +82,12 @@ class UsersController extends Controller
     {
         if(\Auth::user()->id == $id){
             $selects = [
-                'gender'    => $this->profile->getEnum('gender'),
-                'eye'       => $this->profile->getEnum('eye'),
+                'eyes'       => $this->profile->getEnum('eyes'),
                 'hair'      => $this->profile->getEnum('hair'),
                 'education' => $this->profile->getEnum('education'),
                 'kids'      => $this->profile->getEnum('kids'),
                 'kids_live' => $this->profile->getEnum('kids_live'),
-                'want_k'    => $this->profile->getEnum('want_kids'),
+                'want_kids' => $this->profile->getEnum('want_kids'),
                 'family'    => $this->profile->getEnum('family'),
                 'religion'  => $this->profile->getEnum('religion'),
                 'smoke'     => $this->profile->getEnum('smoke'),
@@ -101,7 +102,6 @@ class UsersController extends Controller
                 'user'      => $this->user->find($id),
                 'selects'   => $selects,
                 'countries' => Country::all_order(),
-                'states'    => State::all(),
                 'id'        => $id,
             ]);
         } else
@@ -275,7 +275,7 @@ class UsersController extends Controller
             $user->password   = bcrypt( $request->input('password'));
 
         $user->phone      = $request->input('phone');
-        $user->country_id = $request->input('county');
+        $user->country_id = $request->input('country');
         $user->state_id   = $request->input('state');
         $user->city_id    = $request->input('city');
 
@@ -283,15 +283,15 @@ class UsersController extends Controller
         if( empty((Profile::where('user_id', '=', $id)->first())) ){
             $profile = new Profile();
             $profile->user_id   = $id;
-            $profile->gender    = $request->input('gender');
             $profile->birthday   = new \DateTime($request->input('birthday'));  //check age new \DateTime($request->input('birthday'));
             $profile->height    = $request->input('height');
             $profile->weight   = $request->input('weight');
-            $profile->eye       = $request->input('eye');
+            $profile->eyes       = $request->input('eyes');
             $profile->hair      = $request->input('hair');
             $profile->education = $request->input('education');
             $profile->kids      = $request->input('kids');
-            $profile->want_kids = $request->input('want_k');
+            $profile->kids_live      = $request->input('kids_live');
+            $profile->want_kids = $request->input('want_kids');
             $profile->family    = $request->input('family');
             $profile->religion  = $request->input('religion');
             $profile->smoke     = $request->input('smoke');
@@ -301,19 +301,21 @@ class UsersController extends Controller
             $profile->looking   = $request->input('looking');
             $profile->l_age_start   = $request->input('l_age_start');
             $profile->l_age_stop    = $request->input('l_age_stop');
+            $profile->finance_income   = $request->input('finance_income');
+            $profile->english_level    = $request->input('english_level');
             $profile->save();
             return redirect('/'.\App::getLocale().'/profile/show/'.$id);
         } else {
             $profile = Profile::where('user_id', '=', $id)->first();
             $profile->user_id   = $id;
-            $profile->gender    = $request->input('gender');
             $profile->birthday  = new \DateTime($request->input('birthday'));  //check age new \DateTime($request->input('birthday'));
             $profile->height    = $request->input('height');
             $profile->weight    = $request->input('weight');
-            $profile->eye       = $request->input('eye');
+            $profile->eyes       = $request->input('eyes');
             $profile->hair      = $request->input('hair');
             $profile->education = $request->input('education');
             $profile->kids      = $request->input('kids');
+            $profile->kids_live = $request->input('kids_live');
             $profile->want_kids = $request->input('want_kids');
             $profile->family    = $request->input('family');
             $profile->religion  = $request->input('religion');
@@ -324,6 +326,8 @@ class UsersController extends Controller
             $profile->looking   = $request->input('looking');
             $profile->l_age_start = $request->input('l_age_start');
             $profile->l_age_stop = $request->input('l_age_stop');
+            $profile->finance_income   = $request->input('finance_income');
+            $profile->english_level    = $request->input('english_level');
             $profile->save();
             return redirect('/'.\App::getLocale().'/profile/show/'.$id);
         }

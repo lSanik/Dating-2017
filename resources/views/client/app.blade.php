@@ -33,7 +33,7 @@
                   {
                      echo "$u";
                   }
-            ?>     
+            ?>
             </li>
             <li><a href="/{{ App::getLocale() }}/profile/show/{{ Auth::user()->id }}">{{ trans('profile.my') }}</a></li>
             <li><a href="/{{ App::getLocale() }}/profile/{{ Auth::user()->id }}/photo/">{{ trans('profile.photo') }}</a></li>
@@ -151,7 +151,7 @@
                                 </div>
 
 
-                            </div>
+                            </div><!-- Ошибка ? -->
                         </form>
                     </div>
                 </div>

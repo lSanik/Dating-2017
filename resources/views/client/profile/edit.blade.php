@@ -56,7 +56,7 @@
                             </div>
                             <div class="form-group">
                                 {!! Form::label('coutry', trans('profile.country')) !!}
-                                <select name="county" class="form-control">
+                                <select name="country" class="form-control">
                                     @foreach($countries as $country)
                                         <option value="{{ $country->id }}"
                                                 @if( $country->id == $user->country_id )
@@ -74,19 +74,18 @@
                             </div>
                             <div class="form-group">
                                 {!! Form::label('state', trans('profile.state') ) !!}
-                                {!! Form::hidden('user_state_id', !empty($user->state_id) ? $user->state_id : '' ) !!}
+                                {!! Form::hidden('user_state_id', $user->state_id ) !!}
                                 <select name="state" class="form-control"></select>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('city', trans('profile.city') ) !!}
-                                {!! Form::hidden('user_city_id', !empty($user->city_id) ? $user->city_id : '') !!}
+                                {!! Form::hidden('user_city_id', $user->city_id ) !!}
                                 <select name="city" class="form-control"></select>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('about', trans('profile.about') ) !!}
                                 {!! Form::textarea('about', !empty($user->profile->about) ? $user->profile->about : '', ['class' => 'form-control']) !!}
                             </div>
-
                         </div>
 
 
@@ -111,106 +110,125 @@
                             </div>
                             <div class="form-group">
                                 {!! Form::label('weight', trans('profile.weight') ) !!}
-                                {!! Form::text('weight', !empty($user->profile->weight) ? $user->profile->width : '', ['class' => 'form-control']) !!}
+                                {!! Form::text('weight', !empty($user->profile->weight) ? $user->profile->weight : '', ['class' => 'form-control']) !!}
                             </div>
+                            <div class="form-group">
+                                {!! Form::label('eyes', trans('profile.eyes') ) !!}
+                                <select name="eyes" class="form-control">
+                                    @foreach($selects['eyes'] as $eyes)
+                                        <option value="{{ $eyes }}" {{ ($eyes == $user->profile->eyes)?'selected':'' }}>{{ trans('profile.'.$eyes) }}</option>
+                                    @endforeach
+                                </select>
+			                </div>
+                            <div class="form-group">
+                                {!! Form::label('hair', trans('profile.hair') ) !!}
+                                <select name="hair" class="form-control">
+                                    @foreach($selects['hair'] as $hair)
+                                        <option value="{{ $hair }}" {{ ($hair == $user->profile->hair)?'selected':'' }}>{{ trans('profile.'.$hair) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('education', trans('profile.education') ) !!}
+                                <select name="education" class="form-control">
+                                    @foreach($selects['education'] as $education)
+                                        <option value="{{ $education }}" {{ ($education == $user->profile->education)?'selected':'' }}>{{ trans('profile.'.$education) }}</option>
+                                    @endforeach
+                                </select>
+			                </div>
                             <div class="form-group">
                                 {!! Form::label('occupation', trans('profile.occupation') ) !!}
                                 {!! Form::text('occupation', !empty($user->profile->occupation) ? $user->profile->occupation : '', ['class' => 'form-control']) !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('gender', trans('profile.gender') ) !!}
-
-<select name="gender" class="form-control">
-@foreach($selects['gender'] as $gender)
-<option value="{{ $gender }}">{{ trans('profile.'.$gender) }}</option>
-@endforeach       
-</select>                            
-			    </div>
-                            <div class="form-group">
-                                {!! Form::label('eye', trans('profile.eye') ) !!}
-
-<select name="eye" class="form-control">
-@foreach($selects['eye'] as $eye)
-<option value="{{ $eye }}">{{ trans('profile.'.$eye) }}</option>
-@endforeach       
-</select>                            
-			    </div>
-                            <div class="form-group">
-                                {!! Form::label('hair', trans('profile.hair') ) !!}
-
-<select name="hair" class="form-control">
-@foreach($selects['hair'] as $hair)
-<option value="{{ $hair }}">{{ trans('profile.'.$hair) }}</option>
-@endforeach       
-</select>                    
+                                {!! Form::label('finance_income', trans('profile.finance_income') ) !!}
+                                <select name="finance_income" class="form-control">
+                                    @foreach($selects['finance_income'] as $finance_income)
+                                        <option value="{{ $finance_income }}" {{ ($finance_income == $user->profile->finance_income)?'selected':'' }}>{{ trans('profile.'.$finance_income) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="form-group">
-                                {!! Form::label('education', trans('profile.education') ) !!}
-                                {!! Form::select('education', $selects['education'], !empty($user->profile->education) ? $user->profile->education : '',  ['class' => 'form-control']) !!}
-                           
-			    </div>
-                            <div class="form-group">
-                                {!! Form::label('kids', trans('profile.kids') ) !!}
-
-<select name="kids" class="form-control">
-@foreach($selects['kids'] as $kids)
-<option value="{{ $kids }}">{{ trans('profile.'.$kids) }}</option>
-@endforeach       
-</select>
-			    </div>
-                            <div class="form-group">
-                                {!! Form::label('want_kids', trans('profile.want_kids') ) !!}
-
-<select name="want_k" class="form-control">
-@foreach($selects['want_k'] as $want_k)
-<option value="{{ $want_k }}">{{ trans('profile.'.$want_k) }}</option>
-@endforeach       
-</select>
- 			    </div>
+                            <!-- Селект family (семейное положение) учитывает пол пользователя - пример: женат/замужем -->
                             <div class="form-group">
                                 {!! Form::label('family', trans('profile.family') ) !!}
+                                <select name="family" class="form-control">
+                                    @foreach($selects['family'] as $family)
+                                        @if($family == '---')
+                                            <option value="{{ $family }}" {{ ($family == $user->profile->family)?'selected':'' }}>{{ trans('profile.'.$family) }}</option>
+                                        @else
+                                            <option value="{{ $family }}" {{ ($family == $user->profile->family)?'selected':'' }}>
+                                            {{ ($user->profile->gender == 'male' || $user->profile->gender == 'female') ? trans('profile.'.$family.'_'.$user->profile->gender) : $family }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+			                </div>
+                            <div class="form-group">
+                                {!! Form::label('kids', trans('profile.kids') ) !!}
+                                <select name="kids" class="form-control">
+                                    @foreach($selects['kids'] as $kids)
+                                        <option value="{{ $kids }}" {{ ($kids == $user->profile->kids)?'selected':'' }}>{{ trans('profile.'.$kids) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('kids_live', trans('profile.kids_live') ) !!}
+                                <select name="kids_live" class="form-control">
+                                    @foreach($selects['kids_live'] as $kids_live)
+                                        <option value="{{ $kids_live }}" {{ ($kids_live == $user->profile->kids_live)?'selected':'' }}>{{ trans('profile.'.$kids_live) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('want_kids', trans('profile.want_kids') ) !!}
+                                <select name="want_kids" class="form-control">
+                                    @foreach($selects['want_kids'] as $want_kids)
+                                        <option value="{{ $want_kids }}" {{ ($want_kids == $user->profile->want_kids)?'selected':'' }}>{{ trans('profile.'.$want_kids) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-<select name="family" class="form-control">
-@foreach($selects['family'] as $family)
-<option value="{{ $family }}">{{ trans('profile.'.$family) }}</option>
-@endforeach       
-</select>
-			    </div>
+                            <div class="form-group">
+                                {!! Form::label('english_level', trans('profile.english_level') ) !!}
+                                <select name="english_level" class="form-control">
+                                    @foreach($selects['english_level'] as $english_level)
+                                        <option value="{{ $english_level }}" {{ ($english_level == $user->profile->english_level)?'selected':'' }}>{{ trans('profile.'.$english_level) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('know_lang', trans('profile.know_lang') ) !!}
+                                {!! Form::text('know_lang', !empty($user->profile->know_lang) ? $user->profile->know_lang : '', ['class' => 'form-control']) !!}
+                            </div>
                             <div class="form-group">
                                 {!! Form::label('religion', trans('profile.religion') ) !!}
-
-<select name="religion" class="form-control">
-@foreach($selects['religion'] as $religion)
-<option value="{{ $religion }}">{{ trans('profile.'.$religion) }}</option>
-@endforeach       
-</select>                            
-			    </div>
+                                <select name="religion" class="form-control">
+                                    @foreach($selects['religion'] as $religion)
+                                        <option value="{{ $religion }}" {{ ($religion == $user->profile->religion)?'selected':'' }}>{{ trans('profile.'.$religion) }}</option>
+                                    @endforeach
+                                </select>
+			                </div>
                             <div class="form-group">
                                 {!! Form::label('smoke', trans('profile.smoke') ) !!}
-
-<select name="smoke" class="form-control">
-@foreach($selects['smoke'] as $smoke)
-<option value="{{ $smoke }}">{{ trans('profile.'.$smoke) }}</option>
-@endforeach       
-</select>                            
-			    </div>
+                                <select name="smoke" class="form-control">
+                                    @foreach($selects['smoke'] as $smoke)
+                                        <option value="{{ $smoke }}" {{ ($smoke == $user->profile->smoke)?'selected':'' }}>{{ trans('profile.'.$smoke) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="form-group">
                                 {!! Form::label('drink', trans('profile.drink') ) !!}
-
-<select name="drink" class="form-control">
-@foreach($selects['drink'] as $drink)
-<option value="{{ $drink }}">{{ trans('profile.'.$drink) }}</option>
-@endforeach       
-</select>                            
-			    </div>
-                            <div class="form-group">
-                                {!! Form::submit('Submit', ['class' => 'btn btn-success']) !!}
+                                <select name="drink" class="form-control">
+                                    @foreach($selects['drink'] as $drink)
+                                        <option value="{{ $drink }}" {{ ($drink == $user->profile->drink)?'selected':'' }}>{{ trans('profile.'.$drink) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                        </div>
-                </div>
+                            <div class="form-group">
+                                {!! Form::submit(trans('buttons.save'), ['class' => 'btn btn-success']) !!}
+                            </div>
+                        </div><!-- .col-md-6 -->
                 {!! Form::close() !!}
-
-        </div>
+        </div><!-- .panel-default -->
     </section>
 @stop
 
@@ -232,9 +250,9 @@
                     for ( var i = 0; i < response.length; i++)
                     {
                         if( response[i].id == $('input[name="user_city_id"]').val() )
-                            $('select[name="city"]').append("<option value='" + response[i].id + "'  selected='selected'>" + @if(\App::getLocale()=="ru") {{'response[i].name'}} @else {{'response[i].name_en'}} @endif  + "</option>");
+                            $('select[name="city"]').append("<option value='" + response[i].id + "'  selected='selected'>" + response[i].name + "</option>");
                         else
-                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" + @if(\App::getLocale()=="ru") {{'response[i].name'}} @else {{'response[i].name_en'}} @endif + "</option>");
+                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
                     }
 
                 },
@@ -256,9 +274,9 @@
                     for( var i = 0; i < response.length; i++ )
                     {
                         if( response[i].id == $('input[name="user_state_id"]').val() )
-                            $('select[name="state"]').append("<option value='" + response[i].id + "' selected='selected'>" + @if(\App::getLocale()=="ru") {{'response[i].name'}} @else {{'response[i].name_en'}} @endif + "</option>");
+                            $('select[name="state"]').append("<option value='" + response[i].id + "' selected='selected'>" + response[i].name + "</option>");
                         else
-                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" + @if(\App::getLocale()=="ru") {{'response[i].name'}} @else {{'response[i].name_en'}} @endif + "</option>");
+                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
                     }
                 },
                 error: function( response ){
@@ -266,14 +284,13 @@
                 }
             });
 
-            get_cities($id);
+            get_cities($('input[name="user_state_id"]').val());
         }
 
-        jQuery(window).on('load', function(){
-
-            get_states( $('select[name="county"]').val() );
-
+        $(window).on('load', function(){
+            get_states( $('select[name="country"]').val() );
         });
+
 
         $(function() {
             $('.default-date-picker').datepicker();
@@ -301,7 +318,7 @@
                 $('#preview-avatar').css('display', 'none');
             });
 
-            $('select[name="county"]').on('change', function(){
+            $('select[name="country"]').on('change', function(){
 
                 $('select[name="city"]').empty();
 
@@ -313,7 +330,7 @@
                         $('select[name="state"]').empty();
                         for( var i = 0; i < response.length; i++ )
                         {
-                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" + @if(\App::getLocale()=="ru") {{'response[i].name'}} @else {{'response[i].name_en'}} @endif + "</option>");
+                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
                         }
                     },
                     error: function( response ){
@@ -333,7 +350,7 @@
                         $('select[name="city"]').empty();
                         for ( var i = 0; i < response.length; i++)
                         {
-                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" + @if(\App::getLocale()=="ru") {{'response[i].name'}} @else {{'response[i].name_en'}} @endif + "</option>");
+                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
                         }
 
                     },
@@ -343,6 +360,7 @@
                 })
 
             });
+
         });
 
         jQuery(window).on('load', function(){
