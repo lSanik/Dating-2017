@@ -21,7 +21,7 @@
                 <div class="col-md-6 col-xs-6"> 
                     <div class="row info mobile_ver">
                         <div class="name text-right">
-                            <header>{{ $u->first_name }} <span class="prifile_id">| ID: <span id="id">{{ $u->uid }}</span> </span>
+                            <header>{{ $u->first_name }} <span class="profile_id">| ID: <span id="id">{{ $u->uid }}</span> </span>
                             @if( (Auth::user()) && (Auth::user()->hasRole('Female')) )
                                  <i class="fa fa-check" aria-hidden="true"></i> 
                             @endif
@@ -50,7 +50,7 @@
                         <ul class="mob_info">
                             <li>{{ trans('profile.country') }}: {{ trans('country.'.$u->country) }}</li>
                             <li>{{ trans('profile.height') }}: {{ $u->height }}</li>
-                            <li>{{ trans('profile.eyes') }}: {{ trans('profile.'.$u->eye) }}</li>
+                            <li>{{ trans('profile.eyes') }}: {{ trans('profile.'.$u->eyes) }}</li>
 
                         </ul>
                     </div>
@@ -71,7 +71,7 @@
                 <div class="user_data col-md-6 col-xs-6">
                     <div class="row info">
                         <div class="name">
-                            <header>{{ $u->first_name }} <span class="prifile_id">| ID: {{ $u->uid }} </span>
+                            <header>{{ $u->first_name }} <span class="profile_id">| ID: {{ $u->uid }} </span>
                             @if( (Auth::user()) && (Auth::user()->hasRole('Female')) )
                                  <i class="fa fa-check" aria-hidden="true"></i> 
                             @endif
@@ -81,14 +81,14 @@
 
                     <div class="row info">
                         <div class="col-md-6"><strong>{{ trans('profile.age') }}:</strong> {{ date('Y-m-d') - $u->birthday }}</div>
-                        <div class="col-md-6"><strong>{{ trans('profile.country') }}:</strong> {{ trans('country.'.$u->country) }}</div>
+                        <div class="col-md-6"><strong>{{ trans('profile.country') }}:</strong> {{ (\App::getLocale() == 'ru') ? $u->country : $u->country_en }}</div>
                     </div>
                     <div class="row info">
                         <div class="col-md-6"><strong>{{ trans('profile.birthday') }}:</strong> {{ $u->birthday }}</div>
-                        <div class="col-md-6"><strong>{{ trans('profile.city') }}:</strong>{{ trans('city.'.$u->city) }}</div>
+                        <div class="col-md-6"><strong>{{ trans('profile.city') }}:</strong> {{ (\App::getLocale() == 'ru') ? $u->city : $u->city_en }}</div>
                     </div>
                     <div class="row info">
-                        <div class="col-md-6"><strong>{{ trans('profile.horoscope') }}:</strong> {{trans('zodiac.'.$sign) }}</div>
+                        <div class="col-md-6"><strong>{{ trans('profile.zodiac') }}:</strong> {{trans('horoscope.'.$sign) }}</div>
                         <div class="col-md-6"><strong>{{ trans('profile.height') }}:</strong> {{ $u->height }}</div>
                     </div>
                     <div class="row info">
@@ -96,7 +96,7 @@
                         <div class="col-md-6"><strong>{{ trans('profile.hair') }}:</strong> {{ trans('profile.'.$u->hair) }}</div>
                     </div>
                     <div class="row info">
-                        <div class="col-md-6"><strong>{{ trans('profile.eyes') }}:</strong> {{ trans('profile.'.$u->eye) }}</div>
+                        <div class="col-md-6"><strong>{{ trans('profile.eyes') }}:</strong> {{ trans('profile.'.$u->eyes) }}</div>
                         <div class="col-md-6"><strong>{{ trans('profile.education') }}:</strong> {{ trans('profile.'.$u->education) }}</div>
                     </div>
                     <div class="row info">
@@ -105,7 +105,9 @@
                     </div>
                     <div class="row info">
                         <div class="col-md-6"><strong>{{ trans('profile.want_kids') }}:</strong> {{ trans('profile.'.$u->want_kids) }}</div>
-                        <div class="col-md-6"><strong>{{ trans('profile.family') }}:</strong> {{ trans('profile.'.$u->family) }}</div>
+                        <div class="col-md-6"><strong>{{ trans('profile.family') }}:</strong>
+                            {{ trans('profile.'.($u->gender == 'male' || $u->gender == 'female') ?
+                             trans('profile.'.$u->family.'_'.$u->gender) : $u->family) }}</div>
                     </div>
                     <div class="row info">
                         <div class="col-md-6"><strong>{{ trans('profile.smoke') }}:</strong> {{ trans('profile.'.$u->smoke) }}</div>

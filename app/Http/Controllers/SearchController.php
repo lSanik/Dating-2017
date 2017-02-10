@@ -61,7 +61,7 @@ class SearchController extends Controller
             ->whereHas('profile', function ($query) use ($profile_attrs){
                 $arr_betwen='`birthday` BETWEEN  STR_TO_DATE(YEAR(CURDATE())-'.$profile_attrs["age_stop"].', "%Y") AND STR_TO_DATE(YEAR(CURDATE())-'.($profile_attrs["age_start"]-1).', "%Y")';
                 if(isset($profile_attrs['age_start']) && $profile_attrs['age_start']!='---'){      $query->whereRaw($arr_betwen );}
-                if(isset($profile_attrs['eyes']) && $profile_attrs['eyes']!= "---"){      $query->where('eye', '=', $profile_attrs['eyes']);}
+                if(isset($profile_attrs['eyes']) && $profile_attrs['eyes']!= "---"){      $query->where('eyes', '=', $profile_attrs['eyes']);}
                 if(isset($profile_attrs['hair']) && $profile_attrs['hair']!='---'){      $query->where('hair', '=', $profile_attrs['hair']);}
                 if(isset($profile_attrs['education']) && $profile_attrs['education']!='---'){ $query->where('education', '=', $profile_attrs['education']);}
                 if(isset($profile_attrs['kids']) && $profile_attrs['kids']!='---'){      $query->where('kids', '=', $profile_attrs['kids']);}
@@ -104,7 +104,7 @@ class SearchController extends Controller
     private function getSelects()
     {
         return [
-            'eye'       => array('---'=>'---')+$this->profile->getEnum('eye'),
+            'eyes'       => array('---'=>'---')+$this->profile->getEnum('eyes'),
             'hair'      => array('---'=>'---')+$this->profile->getEnum('hair'),
             'education' => array('---'=>'---')+$this->profile->getEnum('education'),
             'kids'      => array('---'=>'---')+$this->profile->getEnum('kids'),

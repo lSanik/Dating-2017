@@ -79,7 +79,7 @@ class GirlsController extends Controller
     {
         $selects = [
             'gender'    => $this->profile->getEnum('gender'),
-            'eye'       => $this->profile->getEnum('eye'),
+            'eyes'       => $this->profile->getEnum('eyes'),
             'hair'      => $this->profile->getEnum('hair'),
             'education' => $this->profile->getEnum('education'),
             'kids'      => $this->profile->getEnum('kids'),
@@ -121,7 +121,7 @@ class GirlsController extends Controller
             'email'         => 'required|max:128',
             'phone'         => 'required|max:20',
             'password'      => 'required',
-            'county'        => 'required',
+            'country'        => 'required',
             'state'         => 'required',
             'city'          => 'required',
             'passno'        => 'required',
@@ -162,7 +162,7 @@ class GirlsController extends Controller
             $this->user->phone = $request->input('phone');
             $this->user->password = bcrypt($request->input('password'));
 
-            $this->user->country_id = $request->input('county');
+            $this->user->country_id = $request->input('country');
             $this->user->state_id = $request->input('state');
             $this->user->city_id = $request->input('city');
 
@@ -211,7 +211,7 @@ class GirlsController extends Controller
             $this->profile->gender    = $request->input('gender');
             $this->profile->height    = $request->input('height');
             $this->profile->weight    = $request->input('weight');
-            $this->profile->eye       = $request->input('eye');
+            $this->profile->eyes       = $request->input('eyes');
             $this->profile->hair      = $request->input('hair');
             $this->profile->education = $request->input('education');
             $this->profile->kids      = $request->input('kids');
@@ -287,7 +287,7 @@ class GirlsController extends Controller
         $profile_images = $this->profileImages->where('user_id', $id)->get();
         $selects = [
             'gender'    => $this->profile->getEnum('gender'),
-            'eye'       => $this->profile->getEnum('eye'),
+            'eyes'       => $this->profile->getEnum('eyes'),
             'hair'      => $this->profile->getEnum('hair'),
             'education' => $this->profile->getEnum('education'),
             'kids'      => $this->profile->getEnum('kids'),
@@ -377,7 +377,7 @@ class GirlsController extends Controller
         if($request->input('password') !=null){
             $user->password   = bcrypt($request->input('password'));
         }
-        $user->country_id = $request->input('county');
+        $user->country_id = $request->input('country');
         $user->state_id   = $request->input('state');
         $user->city_id    = $request->input('city');
 
@@ -396,7 +396,7 @@ class GirlsController extends Controller
         $profile->gender    = $request->input('gender');
         $profile->height    = $request->input('height');
         $profile->weight    = $request->input('weight');
-        $profile->eye       = $request->input('eye');
+        $profile->eyes       = $request->input('eyes');
         $profile->hair      = $request->input('hair');
         $profile->education = $request->input('education');
         $profile->kids      = $request->input('kids');
