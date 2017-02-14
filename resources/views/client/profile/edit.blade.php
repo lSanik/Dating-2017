@@ -27,7 +27,7 @@
                             <h3> {{ trans('profile.primary') }}</h3>
                             <div class="form-group">
                                 {!! Form::label('avatar', trans('profile.avatar')) !!}<br/>
-                                <img width="373rem" src="{{ url('/uploads/'. $user->avatar) }}" id="preview-avatar">
+                                <img class="img-responsive" src="{{ url('/uploads/'. $user->avatar) }}" id="preview-avatar">
                                 <input type="file" class="form-control file" name="avatar" accept="image/*" value="{{ $user->avatar }}">
                             </div>
                             <div class="form-group">
@@ -250,9 +250,11 @@
                     for ( var i = 0; i < response.length; i++)
                     {
                         if( response[i].id == $('input[name="user_city_id"]').val() )
-                            $('select[name="city"]').append("<option value='" + response[i].id + "'  selected='selected'>" + response[i].name + "</option>");
+                            $('select[name="city"]').append("<option value='" + response[i].id + "'  selected='selected'>" +
+                                    @if (\App::getLocale() == 'ru') response[i].name @else response[i].name_en @endif + "</option>");
                         else
-                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
+                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" +
+                                    @if (\App::getLocale() == 'ru') response[i].name @else response[i].name_en @endif + "</option>");
                     }
 
                 },
@@ -274,9 +276,11 @@
                     for( var i = 0; i < response.length; i++ )
                     {
                         if( response[i].id == $('input[name="user_state_id"]').val() )
-                            $('select[name="state"]').append("<option value='" + response[i].id + "' selected='selected'>" + response[i].name + "</option>");
+                            $('select[name="state"]').append("<option value='" + response[i].id + "' selected='selected'>" +
+                                    @if (\App::getLocale() == 'ru') response[i].name @else response[i].name_en @endif + "</option>");
                         else
-                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
+                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" +
+                                    @if (\App::getLocale() == 'ru') response[i].name @else response[i].name_en @endif + "</option>");
                     }
                 },
                 error: function( response ){
@@ -330,7 +334,8 @@
                         $('select[name="state"]').empty();
                         for( var i = 0; i < response.length; i++ )
                         {
-                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
+                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" +
+                                    @if (\App::getLocale() == 'ru') response[i].name @else response[i].name_en @endif + "</option>");
                         }
                     },
                     error: function( response ){
@@ -350,7 +355,8 @@
                         $('select[name="city"]').empty();
                         for ( var i = 0; i < response.length; i++)
                         {
-                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
+                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" +
+                                    @if (\App::getLocale() == 'ru') response[i].name @else response[i].name_en @endif + "</option>");
                         }
 
                     },

@@ -97,9 +97,10 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('avatar', 'Аватар') !!}<br/>
-                                        <div class="img_avatar" style="max-height: 445px;display: inline-block;width: 100%;"><img width="373rem" style="max-width: 100%;width: auto;height: auto;    max-height: 445px;" src="{{ url('/uploads/'. $user->avatar) }}" id="preview-avatar"></div>
-                                        <input type="file" class="form-control file" name="avatar" accept="image/*" value="{{ $user->avatar }}">
+                                        <img class = "img-responsive" src="{{ url('/uploads/'. $user->avatar) }}" id="preview-avatar">
+                                        <input type="file" class="form-control file" name="avatar" accept="image/*" >
                                     </div>
+                                    {{ $user->avatar }}
                                 </div>
                                 <div class="col-md-8">
                                     <div class="form-group col-md-6">
@@ -527,9 +528,11 @@
                     for ( var i = 0; i < response.length; i++)
                     {
                         if( response[i].id == $('input[name="user_city_id"]').val() )
-                            $('select[name="city"]').append("<option value='" + response[i].id + "'  selected='selected'>" + response[i].name + "</option>");
+                            $('select[name="city"]').append("<option value='" + response[i].id + "'  selected='selected'>" +
+                                    @if (\App::getLocale() == 'ru') response[i].name @else response[i].name_en @endif + "</option>");
                         else
-                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
+                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" +
+                                    @if (\App::getLocale() == 'ru') response[i].name @else response[i].name_en @endif + "</option>");
                     }
 
                 },
@@ -551,9 +554,11 @@
                     for( var i = 0; i < response.length; i++ )
                     {
                         if( response[i].id == $('input[name="user_state_id"]').val() )
-                            $('select[name="state"]').append("<option value='" + response[i].id + "' selected='selected'>" + response[i].name + "</option>");
+                            $('select[name="state"]').append("<option value='" + response[i].id + "' selected='selected'>" +
+                                    @if (\App::getLocale() == 'ru') response[i].name @else response[i].name_en @endif + "</option>");
                         else
-                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
+                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" +
+                                    @if (\App::getLocale() == 'ru') response[i].name @else response[i].name_en @endif + "</option>");
                     }
                 },
                 error: function( response ){
@@ -607,7 +612,8 @@
                         $('select[name="state"]').empty();
                         for( var i = 0; i < response.length; i++ )
                         {
-                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
+                            $('select[name="state"]').append("<option value='" + response[i].id + "'>" +
+                                    @if (\App::getLocale() == 'ru') response[i].name @else response[i].name_en @endif + "</option>");
                         }
                     },
                     error: function( response ){
@@ -627,7 +633,8 @@
                         $('select[name="city"]').empty();
                         for ( var i = 0; i < response.length; i++)
                         {
-                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" + response[i].name + "</option>");
+                            $('select[name="city"]').append("<option value='" + response[i].id + "'>" +
+                                    @if (\App::getLocale() == 'ru') response[i].name @else response[i].name_en @endif + "</option>");
                         }
 
                     },

@@ -38,7 +38,7 @@ return[
 	'weight'	=> 'Weight',
 	'occupation'=> 'Occupation',
 	'gender'	=> 'Gender',
-	'eye'		=> 'Eye',
+	'eyes'		=> 'Eyes',
 	'hair'		=> 'Hair',
 	'lookingForA'		 => 'Looking for a',
 	'from'		=> 'From',

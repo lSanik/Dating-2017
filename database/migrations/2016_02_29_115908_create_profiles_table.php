@@ -24,7 +24,7 @@ class CreateProfilesTable extends Migration
             $table->float('height'); //рос
             $table->float('weight'); //вес
 
-            $table->enum('eye', ['---', 'amber', 'blue', 'brown', 'gray', 'green', 'hazel']); //цвет глаз
+            $table->enum('eyes', ['---', 'amber', 'blue', 'brown', 'gray', 'green', 'hazel']); //цвет глаз
 
             $table->enum('hair', [
                 '---',

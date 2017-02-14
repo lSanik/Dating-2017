@@ -304,7 +304,7 @@ class UsersController extends Controller
             $profile->finance_income   = $request->input('finance_income');
             $profile->english_level    = $request->input('english_level');
             $profile->save();
-            return redirect('/'.\App::getLocale().'/profile/show/'.$id);
+            return redirect('/profile/show/'.$id);
         } else {
             $profile = Profile::where('user_id', '=', $id)->first();
             $profile->user_id   = $id;
@@ -329,7 +329,7 @@ class UsersController extends Controller
             $profile->finance_income   = $request->input('finance_income');
             $profile->english_level    = $request->input('english_level');
             $profile->save();
-            return redirect('/'.\App::getLocale().'/profile/show/'.$id);
+            return redirect('/profile/show/'.$id);
         }
     }
 }

@@ -9,7 +9,7 @@
  */
 
 return [
-    'eye' => [
+    'eyes' => [
         'amber' => 'Amber',
         'blue'  => 'Blue',
         'brown' => 'Brown',

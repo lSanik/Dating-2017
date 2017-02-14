@@ -67,7 +67,7 @@ Route::group([
 
 
 Route::group([  'prefix'        => LaravelLocalization::setLocale(),
-                'middleware'    => ['web', 'auth', 'roles'],
+                'middleware'    => ['web', 'auth', 'roles', /*'localeSessionRedirect', 'localizationRedirect'*/],
                 'roles'         => ['Alien', 'Male', 'Female']
 ], function(){
     Route::get('chat', 'ChatController@index');
@@ -107,7 +107,7 @@ Route::group([  'prefix'        => LaravelLocalization::setLocale(),
 
 /** Admin route group */
 Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
-                'middleware' => ['web', 'auth', 'roles' ],
+                'middleware' => ['web', 'auth', 'roles', /*'localeSessionRedirect', 'localizationRedirect'*/],
                 'roles' => ['Owner', 'Moder', 'Partner']
 ], function(){
 
@@ -143,28 +143,6 @@ Route::group([  'prefix' => LaravelLocalization::setLocale().'/admin',
     Route::post('sender/update', 'Admin\MessageSenderController@update');
     Route::post('sender/ajax', 'Admin\MessageSenderController@ajax');
     /** End Mailer sender delivery */
-
-    /** Start Partners Profile routing */
-    Route::get('partners', 'Admin\PartnerController@index');
-    Route::get('partner/new', 'Admin\PartnerController@create');
-    Route::get('partner/show/{id}', 'Admin\PartnerController@show');
-    Route::get('partner/edit/{id}', 'Admin\PartnerController@edit');
-    Route::get('partner/drop/{id}', 'Admin\PartnerController@destroy');
-
-    Route::post('partner/store', 'Admin\PartnerController@store');
-    Route::post('partner/edit/{id}', 'Admin\PartnerController@update');
-    /** End partners profile routing */
-
-    /** Start Moderator Profile routing */
-    Route::get('moderators', 'Admin\ModeratorController@index');
-    Route::get('moderator/new', 'Admin\ModeratorController@create');
-    Route::get('moderator/show/{id}', 'Admin\ModeratorController@show');
-    Route::get('moderator/edit/{id}', 'Admin\ModeratorController@edit');
-    Route::get('moderator/drop/{id}', 'Admin\ModeratorController@destroy');
-
-    Route::post('moderator/store', 'Admin\ModeratorController@store');
-    Route::post('moderator/edit/{id}', 'Admin\ModeratorController@update');
-    /** End Moderator Profile routing */
 
     /** Start Partners Profile routing */
     Route::get('partners', 'Admin\PartnerController@index');
