@@ -217,7 +217,6 @@ class ModeratorController extends Controller
     public function destroy($id)
     {
         User::where('id', $id)->delete();
-
         \Session::flash('flash_success', 'Drop success!');
         return back();
     }

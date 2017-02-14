@@ -209,8 +209,8 @@
                                 </div-->
                             <input type="hidden" name="gender" value="female">
                             <div class="form-group col-md-4">
-                                {!! Form::label('eye', 'Цвет глаз') !!}
-                                {!! Form::select('eye', $selects['eye'] , '',  ['class' => 'form-control']) !!}
+                                {!! Form::label('eyes', 'Цвет глаз') !!}
+                                {!! Form::select('eyes', $selects['eyes'] , '',  ['class' => 'form-control']) !!}
                             </div>
                             <div class="form-group col-md-4">
                                 {!! Form::label('hair', 'Цвет волос') !!}

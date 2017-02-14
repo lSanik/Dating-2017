@@ -339,6 +339,14 @@ class GirlsController extends Controller
 
         $user->webcam = $request->input('webcam') ? 1 : 0;
         $user->hot = $request->input('hot') ? 1 : 0;
+
+        if ( $request->file('avatar')!=null ) {
+            $file = $request->file('avatar');
+            $user_avatar = time().'-'.$file->getClientOriginalName();
+            $destination = public_path().'/uploads';
+            $file->move($destination, $user_avatar);
+            $user->avatar = $user_avatar;
+        }
 /*
         if ($request->file('avatar')) {
             $file = $request->file('avatar');
@@ -356,10 +364,10 @@ class GirlsController extends Controller
                 array_push($this->passport_photos, $pass);
             }
         }
-*/
+*//*
         if ($request->file('avatar')) {
             $user->avatar =  $this->upload($request->file('avatar'));
-        }
+        }*/
         //var_dump($request->allFiles()['pass_photo']);
 /*
         if(!$request->allFiles()['pass_photo']){
@@ -369,7 +377,7 @@ class GirlsController extends Controller
             }
         }
 */
-        //$this->user->avatar = $user_avatar;
+        //$this->user->avatar = $user_avatar; eye
 
         $user->first_name = $request->input('first_name');
         $user->last_name  = $request->input('second_name');
@@ -384,8 +392,8 @@ class GirlsController extends Controller
         $profile->birthday = date('Y-m-d',strtotime($request->input('b_day').'-'.$request->input('b_month').'-'.$request->input('b_year')));
         $user->save();
         /* profile DATA */
-
-        if($request->file("profile_photo")!==null){
+        //dd($request->file("profile_photo"));
+        if($request->file("profile_photo")[0]!=null){
             foreach ($request->file("profile_photo") as $p_image){
                 $profile_image = new profileImages();
                 $profile_image->url=$this->upload(($p_image));

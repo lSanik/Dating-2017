@@ -119,8 +119,8 @@
 	                        <div class="col-md-3 form-group">
 	                            <label for="want_k">{{ trans('profile.want_k') }}</label>
 	                            <select name="want_k" class="form-control">
-	                                @foreach($selects['want_k'] as $want_k)
-	                                    <option value="{{ $want_k }}">{{ trans('profile.'.$want_k) }}</option>
+	                                @foreach($selects['want_k'] as $want_kids)
+	                                    <option value="{{ $want_kids }}">{{ trans('profile.'.$want_kids) }}</option>
 	                                @endforeach
 	                            </select>
 	                        </div>

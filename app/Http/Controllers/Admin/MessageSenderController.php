@@ -86,7 +86,7 @@ class MessageSenderController extends Controller
     {
         $selects = [
             'gender'    => array('---'=>'---')+$this->profile->getEnum('gender'),
-            'eye'       => array('---'=>'---')+$this->profile->getEnum('eye'),
+            'eyes'       => array('---'=>'---')+$this->profile->getEnum('eyes'),
             'hair'      => array('---'=>'---')+$this->profile->getEnum('hair'),
             'education' => array('---'=>'---')+$this->profile->getEnum('education'),
             'kids'      => array('---'=>'---')+$this->profile->getEnum('kids'),
@@ -162,7 +162,7 @@ class MessageSenderController extends Controller
             ->whereHas('profile', function ($query) use ($profile_attrs){
                 $arr_betwen='`birthday` BETWEEN  STR_TO_DATE(YEAR(CURDATE())-'.$profile_attrs["age_to"].', "%Y") AND STR_TO_DATE(YEAR(CURDATE())-'.($profile_attrs["age_from"]-1).', "%Y")';
                 if($profile_attrs['age_from']!='---'){      $query->whereRaw($arr_betwen );}
-                if($profile_attrs['eye']!= "---"){      $query->where('eye', '=', $profile_attrs['eye']);}
+                if($profile_attrs['eyes']!= "---"){      $query->where('eyes', '=', $profile_attrs['eyes']);}
                 if($profile_attrs['hair']!='---'){      $query->where('hair', '=', $profile_attrs['hair']);}
                 if($profile_attrs['education']!='---'){ $query->where('education', '=', $profile_attrs['education']);}
                 if($profile_attrs['kids']!='---'){      $query->where('kids', '=', $profile_attrs['kids']);}
@@ -205,7 +205,7 @@ class MessageSenderController extends Controller
             ->get();
         $selects = [
             'gender'    => array('---'=>'---')+$this->profile->getEnum('gender'),
-            'eye'       => array('---'=>'---')+$this->profile->getEnum('eye'),
+            'eyes'       => array('---'=>'---')+$this->profile->getEnum('eyes'),
             'hair'      => array('---'=>'---')+$this->profile->getEnum('hair'),
             'education' => array('---'=>'---')+$this->profile->getEnum('education'),
             'kids'      => array('---'=>'---')+$this->profile->getEnum('kids'),

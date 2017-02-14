@@ -88,8 +88,8 @@
                         {!! Form::number('age_to', 50, ['min' => 1, 'max' => 100, 'class' => 'form-control col-md-6', 'style' => 'width: 45%;float: right;']) !!}
                     </div>
                     <div class="form-group col-md-2">
-                        {!! Form::label('eye', trans('profile.eye') ) !!}
-                        {!! Form::select('eye', $selects['eye'] , '' ,  ['class' => 'form-control']) !!}
+                        {!! Form::label('eyes', trans('profile.eyes') ) !!}
+                        {!! Form::select('eyes', $selects['eyes'] , '' ,  ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group col-md-2">
                         {!! Form::label('hair', trans('profile.hair') ) !!}

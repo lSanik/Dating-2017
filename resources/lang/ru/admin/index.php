@@ -37,7 +37,7 @@ return[
 	'weight'	=> 'Вес',
 	'occupation'=> 'Вид деятельности',
 	'gender'	=> 'Пол',
-	'eye'		=> 'Глаза',
+	'eyes'		=> 'Глаза',
 	'lookingForA'		 => 'Ищу:',
 	'from'		=> 'От',
 	'to'		=> 'До',

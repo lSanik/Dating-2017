@@ -57,7 +57,6 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User();
 
         $rules = [
             'first_name'    => 'required',
@@ -71,8 +70,6 @@ class PartnerController extends Controller
 
         $validator = Validator::make($request->input(), $rules);
         if ($validator->fails()) {
-            $messages = $validator->messages();
-
             return \Redirect::back()->withErrors($validator)->withInput();
         }
 
@@ -230,6 +227,7 @@ class PartnerController extends Controller
     public function destroy($id)
     {
         User::where('id', $id)->delete();
+        \Session::flash('flash_success', 'Drop success!');
 
         return redirect('/admin/partners');
     }
